@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Seid.Text.Title" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:fontFamily">@font/urbanist</item>
+        <item name="android:fontWeight">700</item>
+        <item name="android:textSize">@dimen/text_title</item>
+    </style>
+
+    <style name="Seid.Text.Small" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:fontFamily">@font/urbanist</item>
+        <item name="android:fontWeight">400</item>
+        <item name="android:textSize">@dimen/text_small</item>
+    </style>
+
+    <style name="Seid.Text.Button" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:fontFamily">@font/urbanist</item>
+        <item name="android:fontWeight">500</item>
+        <item name="android:textSize">@dimen/text_button</item>
+    </style>
+
+    <style name="Seid.Button.Base" parent="Widget.Material3.Button">
+        <item name="android:layout_height">52dp</item>
+        <item name="cornerRadius">26dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAppearance">@style/Seid.Text.Button</item>
+    </style>
+
+    <style name="Seid.Button.Primary" parent="Seid.Button.Base">
+        <item name="android:background">@drawable/btn_primary_seid</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="Seid.Button.Secondary" parent="Seid.Button.Base">
+        <item name="android:background">@drawable/btn_secondary_seid</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="Seid.InputLayout" parent="Widget.Material3.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">@color/seid_button_dark</item>
+        <item name="boxCornerRadiusTopStart">@dimen/input_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/input_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/input_radius</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/input_radius</item>
+        <item name="hintTextColor">@color/seid_hint</item>
+    </style>
+
+    <style name="Seid.InputEditText">
+        <item name="android:layout_height">@dimen/input_height</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorHint">@color/seid_hint</item>
+        <item name="android:background">@null</item>
+    </style>
+
+</resources>
