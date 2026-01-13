@@ -1,10 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.Seid" parent="Theme.Material3.Dark.NoActionBar">
+
+    <style name="Theme.TrafficAndroidApp" parent="Theme.Material3.Dark.NoActionBar">
         <item name="colorPrimary">@color/seid_yellow</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:fontFamily">@font/urbanist</item>
     </style>
 
-    <style name="Theme.TrafficAndroidApp" parent="Base.Theme.TrafficAndroidApp" />
 </resources>

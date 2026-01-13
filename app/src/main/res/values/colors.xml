@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="seid_yellow">#FFC928</color>
+    <color name="seid_gray">#3A3A3A</color>
     <color name="seid_button_dark">#2B2B2B</color>
     <color name="seid_border">#5A5A5A</color>
     <color name="seid_hint">#A0A0A0</color>

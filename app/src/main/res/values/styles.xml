@@ -32,24 +32,35 @@
     </style>
 
     <style name="Seid.Button.Secondary" parent="Seid.Button.Base">
-        <item name="android:background">@drawable/btn_secondary_seid</item>
+        <item name="backgroundTint">@color/seid_gray</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="Seid.InputLayout" parent="Widget.Material3.TextInputLayout.FilledBox">
-        <item name="boxBackgroundColor">@color/seid_button_dark</item>
-        <item name="boxCornerRadiusTopStart">@dimen/input_radius</item>
-        <item name="boxCornerRadiusTopEnd">@dimen/input_radius</item>
-        <item name="boxCornerRadiusBottomStart">@dimen/input_radius</item>
-        <item name="boxCornerRadiusBottomEnd">@dimen/input_radius</item>
-        <item name="hintTextColor">@color/seid_hint</item>
-    </style>
+    <style name="Seid.EditText.Base" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">52dp</item>
 
-    <style name="Seid.InputEditText">
-        <item name="android:layout_height">@dimen/input_height</item>
+        <item name="android:background">@drawable/bg_input</item>
+
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+
+        <item name="android:gravity">center_vertical</item>
+
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textColorHint">@color/seid_hint</item>
-        <item name="android:background">@null</item>
+
+        <item name="android:fontFamily">@font/urbanist</item>
+        <item name="android:textSize">14sp</item>
+
+        <item name="android:singleLine">true</item>
     </style>
 
+    <style name="Seid.EditText.Email" parent="Seid.EditText.Base">
+        <item name="android:inputType">textEmailAddress</item>
+    </style>
+
+    <style name="Seid.EditText.Password" parent="Seid.EditText.Base">
+        <item name="android:inputType">textPassword</item>
+    </style>
 </resources>

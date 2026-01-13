@@ -5,5 +5,9 @@
     <string name="main_logo_description">Logo Principal</string>
     <string name="email">Correo electrónico</string>
     <string name="password">Contraseña</string>
+    <string name="name">Nombre</string>
+    <string name="confirm_password">Confirmar contraseña</string>
     <string name="register_hint">¿Nuevo usuario? Registrarse</string>
+    <string name="login_hint">¿Ya tienes cuenta? Iniciar sesión</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

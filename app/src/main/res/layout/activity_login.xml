@@ -1,90 +1,74 @@
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
     android:background="@drawable/bg_1">
+
+    <!-- Spacer superior -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
     <!-- Logo -->
     <ImageView
         android:id="@+id/imgLogo"
         android:layout_width="72dp"
         android:layout_height="72dp"
-        android:src="@drawable/icon"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/txtTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintVertical_bias="0.22"/>
+        android:src="@drawable/icon"/>
 
     <!-- Título -->
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/txtTitle"
         style="@style/Seid.Text.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/login"
         android:textColor="@android:color/white"
-        android:layout_marginTop="@dimen/spacing_medium"
-        app:layout_constraintTop_toBottomOf="@id/imgLogo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_marginTop="@dimen/spacing_medium"/>
+
 
     <!-- Email -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputEmail"
-        style="@style/Seid.InputLayout"
-        android:layout_width="0dp"
-        android:layout_marginHorizontal="@dimen/spacing_screen"
-        android:layout_marginTop="@dimen/spacing_large"
+    <EditText
+        android:id="@+id/etEmail"
+        style="@style/Seid.EditText.Email"
         android:hint="@string/email"
-        app:layout_constraintTop_toBottomOf="@id/txtTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/Seid.InputEditText"
-            android:inputType="textEmailAddress"/>
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_marginHorizontal="@dimen/spacing_screen"/>
 
     <!-- Password -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputPassword"
-        style="@style/Seid.InputLayout"
-        android:layout_width="0dp"
-        android:layout_marginHorizontal="@dimen/spacing_screen"
-        android:layout_marginTop="@dimen/spacing_medium"
+    <EditText
+        android:id="@+id/etPassword"
+        style="@style/Seid.EditText.Password"
         android:hint="@string/password"
-        app:endIconMode="password_toggle"
-        app:layout_constraintTop_toBottomOf="@id/inputEmail"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/Seid.InputEditText"
-            android:inputType="textPassword"/>
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:layout_marginHorizontal="@dimen/spacing_screen"/>
 
     <!-- Botón -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnLogin"
         style="@style/Seid.Button.Primary"
-        android:layout_width="0dp"
-        android:layout_marginHorizontal="@dimen/spacing_screen"
+        android:layout_width="match_parent"
         android:layout_marginTop="@dimen/spacing_large"
-        android:text="@string/login"
-        app:layout_constraintTop_toBottomOf="@id/inputPassword"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_marginHorizontal="@dimen/spacing_screen"
+        android:text="@string/login"/>
 
     <!-- Registro -->
     <TextView
         android:id="@+id/txtRegister"
         style="@style/Seid.Text.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/register_hint"
         android:textColor="@color/seid_hint"
-        android:layout_marginTop="@dimen/spacing_medium"
-        app:layout_constraintTop_toBottomOf="@id/btnLogin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_marginTop="@dimen/spacing_medium"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Spacer inferior -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>
