@@ -1,66 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cameraInfo"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="20dp"
+    android:padding="16dp"
     android:background="@drawable/bg_camera_info"
-    android:elevation="12dp">
+    android:elevation="10dp">
 
+    <!-- HEADER -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="12dp">
 
         <TextView
             android:id="@+id/txtTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Info de la cámara"
+            android:text="Información de la cámara"
             android:textColor="@android:color/white"
             android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:textSize="18sp" />
 
         <ImageView
             android:id="@+id/btnClose"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_alignParentEnd="true"
+            android:padding="4dp"
             android:contentDescription="Cerrar"
-            android:src="@drawable/ic_close" />
+            android:src="@drawable/ic_close"
+            app:tint="@android:color/white" />
     </RelativeLayout>
 
+    <!-- DIVIDER -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#33FFFFFF"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- INFO BLOCK -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginTop="16dp"
         android:weightSum="3">
 
-        <TextView
+        <!-- NOMBRE -->
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="CCTV 305\nNombre"
-            android:textColor="@android:color/white"/>
+            android:orientation="vertical"
+            android:gravity="center">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="AP-8\nCarretera"
-            android:textColor="@android:color/white"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre"
+                android:textSize="12sp"
+                android:textColor="#AAFFFFFF"/>
 
-        <TextView
+            <TextView
+                android:id="@+id/txtCameraName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+        <!-- CARRETERA -->
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="100+190\nKm"
-            android:textColor="@android:color/white"/>
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Carretera"
+                android:textSize="12sp"
+                android:textColor="#AAFFFFFF"/>
+
+            <TextView
+                android:id="@+id/txtCameraRoad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+        <!-- KM -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Km"
+                android:textSize="12sp"
+                android:textColor="#AAFFFFFF"/>
+
+            <TextView
+                android:id="@+id/txtCameraKm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
     </LinearLayout>
 
+    <!-- ACTIONS -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -70,20 +138,22 @@
         <Button
             android:id="@+id/btnDetails"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="46dp"
             android:layout_weight="1"
-            android:text="Ver más detalles"
+            android:text="Ver detalles"
+            android:textStyle="bold"
             android:backgroundTint="@color/seid_yellow"
             android:textColor="@android:color/black"/>
 
         <ImageButton
             android:id="@+id/btnBookmark"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
             android:layout_marginStart="12dp"
-            android:background="@android:color/transparent"
+            android:background="@drawable/bg_bookmark_button"
             android:contentDescription="Guardar cámara"
-            android:src="@drawable/ic_bookmark"/>
+            android:src="@drawable/ic_bookmark"
+            app:tint="@color/seid_yellow" />
     </LinearLayout>
 
 </LinearLayout>

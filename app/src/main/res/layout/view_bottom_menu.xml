@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomMenu"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:background="@drawable/bg_bottom_menu"
+    android:elevation="12dp"
+    android:paddingVertical="12dp"
+    android:paddingHorizontal="16dp">
+
+    <!-- EXPLORAR -->
+    <LinearLayout
+        android:id="@+id/menuExplore"
+        style="@style/BottomMenuItemContainer">
+
+        <ImageView
+            android:id="@+id/iconExplore"
+            style="@style/BottomMenuItemIcon"
+            android:src="@drawable/ic_explore" />
+
+        <TextView
+            style="@style/BottomMenuItemText"
+            android:text="Explorar" />
+    </LinearLayout>
+
+    <!-- MARCADOR (ACTIVO) -->
+    <LinearLayout
+        android:id="@+id/menuBookmark"
+        style="@style/BottomMenuItemContainer">
+
+        <ImageView
+            android:id="@+id/iconBookmark"
+            style="@style/BottomMenuItemIcon"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@drawable/ic_bookmark"
+            app:tint="@color/seid_yellow" />
+
+        <TextView
+            style="@style/BottomMenuItemText"
+            android:text="Marcador"
+            android:textStyle="bold"
+            android:textColor="@color/seid_yellow"/>
+    </LinearLayout>
+
+    <!-- PERFIL -->
+    <LinearLayout
+        android:id="@+id/menuProfile"
+        style="@style/BottomMenuItemContainer">
+
+        <ImageView
+            android:id="@+id/iconProfile"
+            style="@style/BottomMenuItemIcon"
+            android:src="@drawable/ic_profile" />
+
+        <TextView
+            style="@style/BottomMenuItemText"
+            android:text="Perfil" />
+    </LinearLayout>
+
+</LinearLayout>

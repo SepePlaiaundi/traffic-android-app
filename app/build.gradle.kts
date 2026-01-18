@@ -50,6 +50,8 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     annotationProcessor("androidx.room:room-compiler:2.6.1")
 
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
     // BASE
     implementation(libs.appcompat)
     implementation(libs.material)
