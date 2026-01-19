@@ -10,9 +10,9 @@
     android:background="@drawable/bg_bottom_menu"
     android:elevation="12dp"
     android:paddingVertical="12dp"
-    android:paddingHorizontal="16dp">
+    android:paddingHorizontal="16dp"
+    android:fitsSystemWindows="true">
 
-    <!-- EXPLORAR -->
     <LinearLayout
         android:id="@+id/menuExplore"
         style="@style/BottomMenuItemContainer">
@@ -20,46 +20,53 @@
         <ImageView
             android:id="@+id/iconExplore"
             style="@style/BottomMenuItemIcon"
-            android:src="@drawable/ic_explore" />
+            android:src="@drawable/ic_explore"
+            app:tint="@color/selector_bottom_menu" />
 
         <TextView
+            android:id="@+id/textExplore"
             style="@style/BottomMenuItemText"
-            android:text="Explorar" />
+            android:text="Explorar"
+            android:textStyle="bold"
+            android:textColor="@color/selector_bottom_menu"/>
     </LinearLayout>
 
-    <!-- MARCADOR (ACTIVO) -->
     <LinearLayout
         android:id="@+id/menuBookmark"
-        style="@style/BottomMenuItemContainer">
+        style="@style/BottomMenuItemContainer"
+        android:clickable="true"
+        android:focusable="true">
 
         <ImageView
             android:id="@+id/iconBookmark"
             style="@style/BottomMenuItemIcon"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
             android:src="@drawable/ic_bookmark"
-            app:tint="@color/seid_yellow" />
+            app:tint="@color/selector_bottom_menu"/>
 
         <TextView
+            android:id="@+id/textBookmark"
             style="@style/BottomMenuItemText"
             android:text="Marcador"
-            android:textStyle="bold"
-            android:textColor="@color/seid_yellow"/>
+            android:textColor="@color/selector_bottom_menu"/>
     </LinearLayout>
 
-    <!-- PERFIL -->
     <LinearLayout
         android:id="@+id/menuProfile"
-        style="@style/BottomMenuItemContainer">
+        style="@style/BottomMenuItemContainer"
+        android:clickable="true"
+        android:focusable="true">
 
         <ImageView
             android:id="@+id/iconProfile"
             style="@style/BottomMenuItemIcon"
-            android:src="@drawable/ic_profile" />
+            android:src="@drawable/ic_profile"
+            app:tint="@color/selector_bottom_menu"/>
 
         <TextView
+            android:id="@+id/textProfile"
             style="@style/BottomMenuItemText"
-            android:text="Perfil" />
+            android:text="Perfil"
+            android:textColor="@color/selector_bottom_menu"/>
     </LinearLayout>
 
 </LinearLayout>

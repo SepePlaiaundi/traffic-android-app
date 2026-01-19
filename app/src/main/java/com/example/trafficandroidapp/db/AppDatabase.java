@@ -5,7 +5,9 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {CameraEntity.class}, version = 2) // <-- Subir a 2
+import com.example.trafficandroidapp.models.Camera;
+
+@Database(entities = {Camera.class}, version = 3) // <-- Subir a 2
 public abstract class AppDatabase extends RoomDatabase {
     public abstract CameraDao cameraDao();
     private static AppDatabase instance;
