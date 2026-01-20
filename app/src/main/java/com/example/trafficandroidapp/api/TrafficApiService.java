@@ -6,8 +6,12 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 
 public interface TrafficApiService {
     @GET("camara")
-    Call<List<Camera>> getCameras();
+    Call<List<Camera>> getCameras(
+            @Header("Authorization") String authHeader
+    );
+
 }

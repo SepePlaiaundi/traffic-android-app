@@ -1,22 +1,20 @@
-package com.example.trafficandroidapp;
+package com.example.trafficandroidapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-public class BookmarksActivity extends AppCompatActivity {
+import com.example.trafficandroidapp.R;
+
+public class ProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bookmarks);
-        setupBottomMenu("bookmark");
+        setContentView(R.layout.activity_profile);
+        setupBottomMenu("profile");
     }
 
     private void setupBottomMenu(String activeTab) {
@@ -53,7 +51,7 @@ public class BookmarksActivity extends AppCompatActivity {
         btnBookmark.setOnClickListener(v -> {
             if (!activeTab.equals("bookmark")) {
                 // Reemplaza BookmarkActivity.class con tu clase real
-                Intent intent = new Intent(this, BookmarksActivity.class);
+                Intent intent = new Intent(this, BookmarkActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
             }

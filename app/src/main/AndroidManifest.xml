@@ -19,16 +19,22 @@
         android:theme="@style/Theme.TrafficAndroidApp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ProfileActivity"
+            android:name=".ui.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".BookmarksActivity"
+            android:name=".ui.BookmarkActivity"
             android:exported="false" />
         <activity
-            android:name=".CameraDetailsActivity"
+            android:name=".ui.CameraDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".MapsActivity"
+            android:name=".ui.MapsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,13 +43,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="false">
 
             <!-- <intent-filter> -->

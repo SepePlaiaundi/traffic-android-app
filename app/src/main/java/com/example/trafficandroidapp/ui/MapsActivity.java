@@ -1,13 +1,13 @@
-package com.example.trafficandroidapp;
+package com.example.trafficandroidapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.trafficandroidapp.R;
 import com.example.trafficandroidapp.models.Camera;
 import com.example.trafficandroidapp.repository.TrafficRepository;
 
@@ -92,8 +92,6 @@ public class MapsActivity extends AppCompatActivity {
             addCamerasToMap(cameras);
         });
     }
-
-
 
     private void clearMarkers() {
         map.getOverlays().removeAll(allCameraMarkers);
@@ -213,7 +211,7 @@ public class MapsActivity extends AppCompatActivity {
         btnBookmark.setOnClickListener(v -> {
             if (!activeTab.equals("bookmark")) {
                 // Reemplaza BookmarkActivity.class con tu clase real
-                Intent intent = new Intent(this, BookmarksActivity.class);
+                Intent intent = new Intent(this, BookmarkActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
             }
