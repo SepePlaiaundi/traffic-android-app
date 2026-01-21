@@ -43,10 +43,22 @@ public class BookmarkActivity extends AppCompatActivity {
         setupBottomMenu("bookmark");
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadBookmarks();
+    }
+
     private void setupRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recyclerBookmarks);
 
         adapter = new BookmarkAdapter();
+        adapter.configure(
+                bookmarkedCameraIds,
+                bookmarkRepository,
+                this::loadBookmarks
+        );
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }

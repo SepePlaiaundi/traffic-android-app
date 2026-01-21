@@ -153,6 +153,7 @@ public class MapsActivity extends AppCompatActivity {
         intent.putExtra("lat", selectedCamera.latitude);
         intent.putExtra("lon", selectedCamera.longitude);
         intent.putExtra("image", selectedCamera.urlImage);
+        intent.putExtra("id", selectedCamera.id);
         startActivity(intent);
     }
 

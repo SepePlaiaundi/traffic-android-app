@@ -9,8 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.trafficandroidapp.R;
+import com.example.trafficandroidapp.repository.BookmarkRepository;
+import com.google.android.material.button.MaterialButton;
 
 public class CameraDetailsActivity extends AppCompatActivity {
+
+    private boolean isBookmarked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +27,7 @@ public class CameraDetailsActivity extends AppCompatActivity {
         TextView txtLat = findViewById(R.id.txtLat);
         TextView txtLon = findViewById(R.id.txtLon);
         ImageView imgCamera = findViewById(R.id.imgCamera);
+        MaterialButton btnSave = findViewById(R.id.btnSave);
 
         Intent i = getIntent();
 
@@ -32,7 +37,6 @@ public class CameraDetailsActivity extends AppCompatActivity {
         txtLat.setText(i.getStringExtra("lat"));
         txtLon.setText(i.getStringExtra("lon"));
 
-
         String imageUrl = i.getStringExtra("image");
         if (imageUrl != null) {
             Glide.with(this)
@@ -41,5 +45,36 @@ public class CameraDetailsActivity extends AppCompatActivity {
         }
 
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+
+        BookmarkRepository repo = new BookmarkRepository(this);
+        long cameraId = Long.parseLong(i.getStringExtra("id"));
+
+        repo.isBookmarked(cameraId, bookmarked -> {
+            isBookmarked = bookmarked;
+            updateButton(btnSave);
+        });
+
+        btnSave.setOnClickListener(v -> {
+            if (isBookmarked) {
+                repo.removeBookmark(cameraId, () -> {
+                    isBookmarked = false;
+                    updateButton(btnSave);
+                });
+            } else {
+                repo.addBookmark(cameraId);
+                isBookmarked = true;
+                updateButton(btnSave);
+            }
+        });
+
+    }
+
+    private void updateButton(MaterialButton btnSave) {
+        if (isBookmarked) {
+            btnSave.setText("Quitar de favoritos");
+        } else {
+            btnSave.setText("Guardar la cámara");
+        }
     }
 }
+

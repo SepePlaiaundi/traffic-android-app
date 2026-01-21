@@ -6,30 +6,66 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.trafficandroidapp.R;
 import com.example.trafficandroidapp.models.Camera;
+import com.example.trafficandroidapp.repository.BookmarkRepository;
+
+import java.util.Set;
 
 public class BookmarkViewHolder extends RecyclerView.ViewHolder {
 
-    private final TextView txtName;
-    private final TextView txtRoad;
-    private final TextView txtKm;
-    private final ImageView imgCamera;
+    private final TextView txtTitle;
+    private final TextView txtSubtitle;
+    private final ImageView imgPreview;
+    private final ImageView imgBookmark;
 
     public BookmarkViewHolder(View itemView) {
         super(itemView);
-        txtName = itemView.findViewById(R.id.txtCameraName);
-        txtRoad = itemView.findViewById(R.id.txtRoad);
-        txtKm = itemView.findViewById(R.id.txtKm);
-        imgCamera = itemView.findViewById(R.id.imgCamera);
+        txtTitle = itemView.findViewById(R.id.txtTitle);
+        txtSubtitle = itemView.findViewById(R.id.txtSubtitle);
+        imgPreview = itemView.findViewById(R.id.imgPreview);
+        imgBookmark = itemView.findViewById(R.id.imgBookmark);
     }
 
-    public void bind(Camera camera) {
-        txtName.setText(camera.getName());
-        txtRoad.setText(camera.getRoad());
-        txtKm.setText(camera.getKilometer());
+    public void bind(Camera camera,
+                     Set<Long> bookmarkedIds,
+                     BookmarkRepository repository,
+                     Runnable onUnbookmarked) {
 
-        // Imagen: más adelante (Glide / Coil)
-        // imgCamera.setImage...
+        txtTitle.setText(camera.getName());
+        txtSubtitle.setText(
+                camera.getRoad() + " · " + camera.getKilometer()
+        );
+
+        Glide.with(itemView)
+                .load(camera.getUrlImage())
+                .placeholder(R.drawable.ic_camera_placeholder)
+                .error(R.drawable.ic_camera_placeholder)
+                .centerCrop()
+                .into(imgPreview);
+
+        long cameraId = Long.parseLong(camera.getId());
+        boolean isBookmarked = bookmarkedIds.contains(cameraId);
+
+        updateIcon(isBookmarked);
+
+        imgBookmark.setOnClickListener(v -> {
+
+            if (isBookmarked) {
+                repository.removeBookmark(cameraId, () -> {
+                    bookmarkedIds.remove(cameraId);
+                    onUnbookmarked.run(); // refresca la lista
+                });
+            }
+        });
+    }
+
+    private void updateIcon(boolean isBookmarked) {
+        imgBookmark.setImageResource(
+                isBookmarked
+                        ? R.drawable.ic_bookmark_filled
+                        : R.drawable.ic_bookmark
+        );
     }
 }
