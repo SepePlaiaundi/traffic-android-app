@@ -1,5 +1,7 @@
 package com.example.trafficandroidapp.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,10 +30,12 @@ public class BookmarkViewHolder extends RecyclerView.ViewHolder {
         imgBookmark = itemView.findViewById(R.id.imgBookmark);
     }
 
-    public void bind(Camera camera,
-                     Set<Long> bookmarkedIds,
-                     BookmarkRepository repository,
-                     Runnable onUnbookmarked) {
+    public void bind(
+            Camera camera,
+            Set<Long> bookmarkedIds,
+            BookmarkRepository repository,
+            Runnable onUnbookmarked
+    ) {
 
         txtTitle.setText(camera.getName());
         txtSubtitle.setText(
@@ -50,8 +54,22 @@ public class BookmarkViewHolder extends RecyclerView.ViewHolder {
 
         updateIcon(isBookmarked);
 
-        imgBookmark.setOnClickListener(v -> {
+        itemView.setOnClickListener(v -> {
+            Context context = itemView.getContext();
+            Intent intent = new Intent(context, CameraDetailsActivity.class);
 
+            intent.putExtra("id", camera.getId());
+            intent.putExtra("name", camera.getName());
+            intent.putExtra("road", camera.getDisplayRoad());
+            intent.putExtra("km", camera.getKilometer());
+            intent.putExtra("lat", camera.getLatitude());
+            intent.putExtra("lon", camera.getLongitude());
+            intent.putExtra("image", camera.getUrlImage());
+
+            context.startActivity(intent);
+        });
+
+        imgBookmark.setOnClickListener(v -> {
             if (isBookmarked) {
                 repository.removeBookmark(cameraId, () -> {
                     bookmarkedIds.remove(cameraId);
@@ -69,3 +87,4 @@ public class BookmarkViewHolder extends RecyclerView.ViewHolder {
         );
     }
 }
+

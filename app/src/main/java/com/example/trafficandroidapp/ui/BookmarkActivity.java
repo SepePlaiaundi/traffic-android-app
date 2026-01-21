@@ -2,7 +2,6 @@ package com.example.trafficandroidapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,7 +13,7 @@ import com.example.trafficandroidapp.R;
 import com.example.trafficandroidapp.models.Bookmark;
 import com.example.trafficandroidapp.models.Camera;
 import com.example.trafficandroidapp.repository.BookmarkRepository;
-import com.example.trafficandroidapp.repository.TrafficRepository;
+import com.example.trafficandroidapp.repository.CameraRepository;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,7 +23,7 @@ import java.util.Set;
 public class BookmarkActivity extends AppCompatActivity {
 
     private BookmarkRepository bookmarkRepository;
-    private TrafficRepository trafficRepository;
+    private CameraRepository cameraRepository;
     private BookmarkAdapter adapter;
 
     // IDs de cámaras marcadas
@@ -36,7 +35,7 @@ public class BookmarkActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bookmark);
 
         bookmarkRepository = new BookmarkRepository(this);
-        trafficRepository = new TrafficRepository(this);
+        cameraRepository = new CameraRepository(this);
 
         setupRecyclerView();
         loadBookmarks();
@@ -97,7 +96,7 @@ public class BookmarkActivity extends AppCompatActivity {
      */
     private void observeCameras() {
 
-        trafficRepository.getCamerasLiveData()
+        cameraRepository.getCamerasLiveData()
                 .observe(this, cameras -> {
 
                     if (cameras == null || cameras.isEmpty()) {

@@ -1,15 +1,27 @@
 package com.example.trafficandroidapp.models;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "bookmarks")
 public class Bookmark {
 
-    private Long id;
-    private Long cameraId;
+    @PrimaryKey
+    @NonNull
+    private String cameraId;
 
-    public Long getId() {
-        return id;
+    // Constructor requerido por Room
+    public Bookmark(@NonNull String cameraId) {
+        this.cameraId = cameraId;
     }
 
-    public Long getCameraId() {
+    @NonNull
+    public String getCameraId() {
         return cameraId;
+    }
+
+    public void setCameraId(@NonNull String cameraId) {
+        this.cameraId = cameraId;
     }
 }

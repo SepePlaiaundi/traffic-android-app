@@ -8,7 +8,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 
-public interface TrafficApiService {
+public interface CameraApiService {
     @GET("camara")
     Call<List<Camera>> getCameras(
             @Header("Authorization") String authHeader

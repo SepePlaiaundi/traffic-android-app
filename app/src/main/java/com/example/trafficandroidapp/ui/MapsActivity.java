@@ -3,13 +3,15 @@ package com.example.trafficandroidapp.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.trafficandroidapp.R;
 import com.example.trafficandroidapp.models.Camera;
-import com.example.trafficandroidapp.repository.TrafficRepository;
+import com.example.trafficandroidapp.repository.BookmarkRepository;
+import com.example.trafficandroidapp.repository.CameraRepository;
 
 import org.osmdroid.config.Configuration;
 import org.osmdroid.events.MapListener;
@@ -33,8 +35,12 @@ public class MapsActivity extends AppCompatActivity {
     private Camera selectedCamera;
     private final List<Marker> allCameraMarkers = new ArrayList<>();
 
-    private TrafficRepository repository;
+    private CameraRepository repository;
     private static final double MIN_ZOOM_FOR_MARKERS = 10.0;
+
+    private ImageButton btnBookmark;
+    private BookmarkRepository bookmarkRepository;
+    private boolean isBookmarked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +56,7 @@ public class MapsActivity extends AppCompatActivity {
         initMap();
 
         // Cargar Datos via Repositorio
-        repository = new TrafficRepository(this);
+        repository = new CameraRepository(this);
         loadCameras();
     }
 
@@ -61,6 +67,8 @@ public class MapsActivity extends AppCompatActivity {
         txtCameraName = findViewById(R.id.txtCameraName);
         txtCameraRoad = findViewById(R.id.txtCameraRoad);
         txtCameraKm = findViewById(R.id.txtCameraKm);
+        btnBookmark = findViewById(R.id.btnBookmark);
+        bookmarkRepository = new BookmarkRepository(this);
 
         findViewById(R.id.btnDetails).setOnClickListener(v -> openDetails());
         View.OnClickListener closeAction = v -> closeCameraInfo();
@@ -133,13 +141,42 @@ public class MapsActivity extends AppCompatActivity {
         if (cam == null) return;
 
         selectedCamera = cam;
+
         txtCameraName.setText(cam.name != null ? cam.name : "-");
         txtCameraRoad.setText(cam.getDisplayRoad());
         txtCameraKm.setText(cam.kilometer != null ? cam.kilometer : "-");
 
+        long cameraId = Long.parseLong(cam.id);
+
+        bookmarkRepository.isBookmarked(cameraId, bookmarked -> {
+            isBookmarked = bookmarked;
+            updateBookmarkIcon();
+        });
+
+        btnBookmark.setOnClickListener(v -> {
+            if (isBookmarked) {
+                bookmarkRepository.removeBookmark(cameraId, () -> {
+                    isBookmarked = false;
+                    updateBookmarkIcon();
+                });
+            } else {
+                bookmarkRepository.addBookmark(cameraId);
+                isBookmarked = true;
+                updateBookmarkIcon();
+            }
+        });
+
         scrim.setVisibility(View.VISIBLE);
         cameraInfo.setVisibility(View.VISIBLE);
         map.getController().animateTo(position);
+    }
+
+    private void updateBookmarkIcon() {
+        btnBookmark.setImageResource(
+                isBookmarked
+                        ? R.drawable.ic_bookmark_filled
+                        : R.drawable.ic_bookmark
+        );
     }
 
     private void openDetails() {
@@ -164,7 +201,6 @@ public class MapsActivity extends AppCompatActivity {
 
     private void updateMarkersVisibility(double zoomLevel) {
         boolean visible = zoomLevel >= MIN_ZOOM_FOR_MARKERS;
-        // Evitar bucles innecesarios si el estado no ha cambiado realmente podría ser una optimización futura
         for (Marker m : allCameraMarkers) {
             if (m.isEnabled() != visible) {
                 m.setEnabled(visible);
