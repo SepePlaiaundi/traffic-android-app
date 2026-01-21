@@ -41,6 +41,7 @@ public class CameraRepository {
         dao = AppDatabase.getInstance(context).cameraDao();
         sessionManager = new SessionManager(context);
 
+        fetchFromApi();
         startPeriodicRefresh();
     }
 

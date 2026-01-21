@@ -16,7 +16,7 @@ import com.example.trafficandroidapp.models.Bookmark;
                 Camera.class,
                 Bookmark.class
         },
-        version = 4,
+        version = 5,
         exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {

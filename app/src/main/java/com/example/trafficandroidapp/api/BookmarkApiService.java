@@ -28,6 +28,6 @@ public interface BookmarkApiService {
     @DELETE("/bookmarks/{cameraId}")
     Call<Void> removeBookmark(
             @Header("Authorization") String token,
-            @Path("cameraId") long cameraId
+            @Path("cameraId") String cameraId
     );
 }

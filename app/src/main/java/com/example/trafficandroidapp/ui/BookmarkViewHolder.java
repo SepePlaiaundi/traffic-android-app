@@ -32,7 +32,6 @@ public class BookmarkViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(
             Camera camera,
-            Set<Long> bookmarkedIds,
             BookmarkRepository repository,
             Runnable onUnbookmarked
     ) {
@@ -49,10 +48,8 @@ public class BookmarkViewHolder extends RecyclerView.ViewHolder {
                 .centerCrop()
                 .into(imgPreview);
 
-        long cameraId = Long.parseLong(camera.getId());
-        boolean isBookmarked = bookmarkedIds.contains(cameraId);
-
-        updateIcon(isBookmarked);
+        // En esta pantalla SIEMPRE es bookmark
+        imgBookmark.setImageResource(R.drawable.ic_bookmark_filled);
 
         itemView.setOnClickListener(v -> {
             Context context = itemView.getContext();
@@ -70,21 +67,7 @@ public class BookmarkViewHolder extends RecyclerView.ViewHolder {
         });
 
         imgBookmark.setOnClickListener(v -> {
-            if (isBookmarked) {
-                repository.removeBookmark(cameraId, () -> {
-                    bookmarkedIds.remove(cameraId);
-                    onUnbookmarked.run(); // refresca la lista
-                });
-            }
+            repository.removeBookmark(camera.getId(), onUnbookmarked);
         });
     }
-
-    private void updateIcon(boolean isBookmarked) {
-        imgBookmark.setImageResource(
-                isBookmarked
-                        ? R.drawable.ic_bookmark_filled
-                        : R.drawable.ic_bookmark
-        );
-    }
 }
-

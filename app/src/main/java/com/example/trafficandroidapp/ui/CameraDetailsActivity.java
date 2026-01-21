@@ -47,34 +47,37 @@ public class CameraDetailsActivity extends AppCompatActivity {
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
 
         BookmarkRepository repo = new BookmarkRepository(this);
-        long cameraId = Long.parseLong(i.getStringExtra("id"));
+        String cameraId = i.getStringExtra("id");
 
-        repo.isBookmarked(cameraId, bookmarked -> {
-            isBookmarked = bookmarked;
-            updateButton(btnSave);
-        });
+        /* ============================
+           OBSERVAR ESTADO BOOKMARK
+           ============================ */
+
+        repo.observeIsBookmarked(cameraId)
+                .observe(this, count -> {
+
+                    isBookmarked = count != null && count > 0;
+                    updateButton(btnSave);
+                });
+
+        /* ============================
+           CLICK BOTÓN
+           ============================ */
 
         btnSave.setOnClickListener(v -> {
             if (isBookmarked) {
-                repo.removeBookmark(cameraId, () -> {
-                    isBookmarked = false;
-                    updateButton(btnSave);
-                });
+                repo.removeBookmark(cameraId, null);
             } else {
                 repo.addBookmark(cameraId);
-                isBookmarked = true;
-                updateButton(btnSave);
             }
         });
-
     }
 
     private void updateButton(MaterialButton btnSave) {
-        if (isBookmarked) {
-            btnSave.setText("Quitar de favoritos");
-        } else {
-            btnSave.setText("Guardar la cámara");
-        }
+        btnSave.setText(
+                isBookmarked
+                        ? "Quitar de favoritos"
+                        : "Guardar la cámara"
+        );
     }
 }
-

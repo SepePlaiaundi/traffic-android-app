@@ -19,14 +19,13 @@ public class BookmarkAdapter
         extends RecyclerView.Adapter<BookmarkViewHolder> {
 
     private final List<Camera> items = new ArrayList<>();
-    private Set<Long> bookmarkedIds;
     private BookmarkRepository repository;
     private Runnable onUnbookmarked;
 
-    public void configure(Set<Long> ids,
-                          BookmarkRepository repo,
-                          Runnable onUnbookmarked) {
-        this.bookmarkedIds = ids;
+    public void configure(
+            BookmarkRepository repo,
+            Runnable onUnbookmarked
+    ) {
         this.repository = repo;
         this.onUnbookmarked = onUnbookmarked;
     }
@@ -47,7 +46,6 @@ public class BookmarkAdapter
 
         holder.bind(
                 items.get(position),
-                bookmarkedIds,
                 repository,
                 onUnbookmarked
         );

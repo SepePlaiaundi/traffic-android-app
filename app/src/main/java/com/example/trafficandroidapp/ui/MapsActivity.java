@@ -146,23 +146,21 @@ public class MapsActivity extends AppCompatActivity {
         txtCameraRoad.setText(cam.getDisplayRoad());
         txtCameraKm.setText(cam.kilometer != null ? cam.kilometer : "-");
 
-        long cameraId = Long.parseLong(cam.id);
+        String cameraId = cam.id;
 
-        bookmarkRepository.isBookmarked(cameraId, bookmarked -> {
-            isBookmarked = bookmarked;
-            updateBookmarkIcon();
-        });
+        bookmarkRepository
+                .observeIsBookmarked(cameraId)
+                .observe(this, count -> {
+
+                    isBookmarked = count != null && count > 0;
+                    updateBookmarkIcon();
+                });
 
         btnBookmark.setOnClickListener(v -> {
             if (isBookmarked) {
-                bookmarkRepository.removeBookmark(cameraId, () -> {
-                    isBookmarked = false;
-                    updateBookmarkIcon();
-                });
+                bookmarkRepository.removeBookmark(cameraId, null);
             } else {
                 bookmarkRepository.addBookmark(cameraId);
-                isBookmarked = true;
-                updateBookmarkIcon();
             }
         });
 

@@ -2,13 +2,13 @@ package com.example.trafficandroidapp.models;
 
 public class AddBookmarkRequest {
 
-    private long cameraId;
+    private String cameraId;
 
-    public AddBookmarkRequest(long cameraId) {
+    public AddBookmarkRequest(String cameraId) {
         this.cameraId = cameraId;
     }
 
-    public long getCameraId() {
+    public String getCameraId() {
         return cameraId;
     }
 }

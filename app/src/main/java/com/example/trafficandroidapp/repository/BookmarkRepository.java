@@ -1,6 +1,7 @@
 package com.example.trafficandroidapp.repository;
 
 import android.content.Context;
+import android.os.Looper;
 
 import androidx.lifecycle.LiveData;
 
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import okhttp3.internal.http2.Http2Reader;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,20 +53,16 @@ public class BookmarkRepository {
         return dao.observeAll();
     }
 
-    public void isBookmarked(long cameraId,
-                             IsBookmarkedCallback callback) {
-
-        executor.execute(() -> {
-            boolean result = dao.isBookmarked(cameraId) > 0;
-            callback.onResult(result);
-        });
+    public LiveData<Integer> observeIsBookmarked(String cameraId) {
+        return dao.observeIsBookmarked(cameraId);
     }
+
 
     /* ============================
        ESCRITURA (ROOM + API)
        ============================ */
 
-    public void addBookmark(long cameraId) {
+    public void addBookmark(String cameraId) {
 
         executor.execute(() ->
                 dao.insert(new Bookmark(cameraId))
@@ -82,7 +80,7 @@ public class BookmarkRepository {
         });
     }
 
-    public void removeBookmark(long cameraId,
+    public void removeBookmark(String cameraId,
                                Runnable onSuccess) {
 
         executor.execute(() -> {
