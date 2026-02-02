@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/incidenceInfo"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/bg_camera_info"
+    android:elevation="10dp"
+    android:visibility="gone">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="12dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Detalle de Incidencia"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+        <ImageView
+            android:id="@+id/btnCloseIncidence"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:padding="4dp"
+            android:src="@drawable/ic_close"
+            app:tint="@android:color/white" />
+    </RelativeLayout>
+
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#33FFFFFF" android:layout_marginBottom="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tipo" android:textSize="12sp" android:textColor="#AAFFFFFF"/>
+            <TextView android:id="@+id/txtIncidenceType" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textStyle="bold" android:textColor="@android:color/white" android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Carretera" android:textSize="12sp" android:textColor="#AAFFFFFF"/>
+            <TextView android:id="@+id/txtIncidenceRoad" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textStyle="bold" android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Causa" android:textSize="12sp" android:textColor="#AAFFFFFF"/>
+            <TextView android:id="@+id/txtIncidenceCause" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textStyle="bold" android:textColor="@android:color/white" android:gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnIncidenceDetails"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginTop="20dp"
+        android:text="Más información"
+        android:textStyle="bold"
+        android:backgroundTint="@color/seid_yellow"
+        android:textColor="@android:color/black"/>
+</LinearLayout>

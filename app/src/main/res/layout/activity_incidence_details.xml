@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F0F0F"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@android:color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Detalles de Incidencia"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/btnBack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btnBack" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:cardBackgroundColor="#1E1E1E"
+            app:cardCornerRadius="12dp"
+            app:layout_constraintTop_toBottomOf="@id/btnBack">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <ImageView
+                    android:id="@+id/imgIncidenceIcon"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/ic_otras_incidencias" />
+
+                <TextView
+                    android:id="@+id/txtType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    tools:text="Accidente" />
+
+                <TextView
+                    android:id="@+id/txtLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FF5252"
+                    android:textStyle="bold"
+                    tools:text="Nivel: Rojo" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="#1E1E1E"
+            app:cardCornerRadius="12dp"
+            app:layout_constraintTop_toBottomOf="@id/cardType">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ubicación y Causa"
+                    android:textColor="@color/seid_yellow"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@android:color/white"
+                    tools:text="Descripción detallada de la incidencia en la vía..." />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="12dp"
+                    android:background="#33FFFFFF" />
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="2"
+                    android:rowCount="2">
+
+                    <LinearLayout android:orientation="vertical" android:layout_columnWeight="1" android:layout_marginBottom="12dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Carretera" android:textColor="#AAFFFFFF" android:textSize="12sp" />
+                        <TextView android:id="@+id/txtRoad" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@android:color/white" android:textStyle="bold" tools:text="A-8" />
+                    </LinearLayout>
+
+                    <LinearLayout android:orientation="vertical" android:layout_columnWeight="1">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Provincia" android:textColor="#AAFFFFFF" android:textSize="12sp" />
+                        <TextView android:id="@+id/txtProvince" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@android:color/white" android:textStyle="bold" tools:text="Bizkaia" />
+                    </LinearLayout>
+
+                    <LinearLayout android:orientation="vertical" android:layout_columnWeight="1">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Causa" android:textColor="#AAFFFFFF" android:textSize="12sp" />
+                        <TextView android:id="@+id/txtCause" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@android:color/white" android:textStyle="bold" tools:text="Obras" />
+                    </LinearLayout>
+
+                    <LinearLayout android:orientation="vertical" android:layout_columnWeight="1">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Ciudad" android:textColor="#AAFFFFFF" android:textSize="12sp" />
+                        <TextView android:id="@+id/txtCity" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@android:color/white" android:textStyle="bold" tools:text="Bilbao" />
+                    </LinearLayout>
+                </GridLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

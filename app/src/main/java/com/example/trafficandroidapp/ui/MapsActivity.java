@@ -1,17 +1,27 @@
 package com.example.trafficandroidapp.ui;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.trafficandroidapp.R;
 import com.example.trafficandroidapp.models.Camera;
+import com.example.trafficandroidapp.models.Incidence;
 import com.example.trafficandroidapp.repository.BookmarkRepository;
 import com.example.trafficandroidapp.repository.CameraRepository;
+import com.example.trafficandroidapp.repository.IncidenceRepository;
+import com.example.trafficandroidapp.ui.bookmark.BookmarkActivity;
+import com.google.android.material.chip.ChipGroup;
 
 import org.osmdroid.config.Configuration;
 import org.osmdroid.events.MapListener;
@@ -28,65 +38,83 @@ import java.util.List;
 public class MapsActivity extends AppCompatActivity {
 
     private MapView map;
-    private View cameraInfo, scrim;
+    private View cameraPanel, incidencePanel, scrim;
+
     private TextView txtCameraName, txtCameraRoad, txtCameraKm;
-
-    // UI State
-    private Camera selectedCamera;
-    private final List<Marker> allCameraMarkers = new ArrayList<>();
-
-    private CameraRepository repository;
-    private static final double MIN_ZOOM_FOR_MARKERS = 10.0;
-
     private ImageButton btnBookmark;
+    private TextView txtIncidenceType, txtIncidenceRoad, txtIncidenceCause;
+
+    private Camera selectedCamera;
+    private Incidence selectedIncidence;
+
+    private final List<Marker> allCameraMarkers = new ArrayList<>();
+    private final List<Marker> allIncidenceMarkers = new ArrayList<>();
+
+    private CameraRepository cameraRepository;
+    private IncidenceRepository incidenceRepository;
     private BookmarkRepository bookmarkRepository;
+
+    private static final double MIN_ZOOM_FOR_MARKERS = 10.0;
     private boolean isBookmarked = false;
+    private boolean showCameras = true;
+    private boolean showIncidences = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Configuration.getInstance().setUserAgentValue(getPackageName());
         setContentView(R.layout.activity_maps);
-        setupBottomMenu("explore");
 
-        // Inicializar Vistas
+        cameraRepository = new CameraRepository(this);
+        incidenceRepository = new IncidenceRepository(this);
+        bookmarkRepository = new BookmarkRepository(this);
+
         setupViews();
-
-        // Inicializar Mapa
         initMap();
-
-        // Cargar Datos via Repositorio
-        repository = new CameraRepository(this);
-        loadCameras();
+        observeData();
+        setupBottomMenu("explore");
     }
 
     private void setupViews() {
         map = findViewById(R.id.map);
-        cameraInfo = findViewById(R.id.cameraInfo);
         scrim = findViewById(R.id.scrim);
+        cameraPanel = findViewById(R.id.cameraInfo);
+        incidencePanel = findViewById(R.id.incidenceInfo);
+
         txtCameraName = findViewById(R.id.txtCameraName);
         txtCameraRoad = findViewById(R.id.txtCameraRoad);
         txtCameraKm = findViewById(R.id.txtCameraKm);
         btnBookmark = findViewById(R.id.btnBookmark);
-        bookmarkRepository = new BookmarkRepository(this);
+
+        txtIncidenceType = findViewById(R.id.txtIncidenceType);
+        txtIncidenceRoad = findViewById(R.id.txtIncidenceRoad);
+        txtIncidenceCause = findViewById(R.id.txtIncidenceCause);
 
         findViewById(R.id.btnDetails).setOnClickListener(v -> openDetails());
-        View.OnClickListener closeAction = v -> closeCameraInfo();
-        findViewById(R.id.btnClose).setOnClickListener(closeAction);
-        scrim.setOnClickListener(closeAction);
+        findViewById(R.id.btnClose).setOnClickListener(v -> closePanels());
+        findViewById(R.id.btnIncidenceDetails).setOnClickListener(v -> openDetails());
+        findViewById(R.id.btnCloseIncidence).setOnClickListener(v -> closePanels());
+        scrim.setOnClickListener(v -> closePanels());
+
+        ChipGroup filterGroup = findViewById(R.id.chipGroupFilters);
+        filterGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            showCameras = (checkedId == R.id.chipAll || checkedId == R.id.chipCameras);
+            showIncidences = (checkedId == R.id.chipAll || checkedId == R.id.chipIncidences);
+            applyFilters();
+            closePanels();
+        });
     }
 
     private void initMap() {
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setMultiTouchControls(true);
-        // Centro en Bilbao aprox
         map.getController().setZoom(11.0);
         map.getController().setCenter(new GeoPoint(43.2627, -2.9252));
 
         map.addMapListener(new MapListener() {
             @Override
             public boolean onZoom(ZoomEvent event) {
-                updateMarkersVisibility(event.getZoomLevel());
+                applyFilters();
                 return false;
             }
             @Override
@@ -94,185 +122,206 @@ public class MapsActivity extends AppCompatActivity {
         });
     }
 
-    private void loadCameras() {
-        repository.getCamerasLiveData().observe(this, cameras -> {
-            clearMarkers();
-            addCamerasToMap(cameras);
+    private void observeData() {
+        cameraRepository.getCamerasLiveData().observe(this, cameras -> {
+            map.getOverlays().removeAll(allCameraMarkers);
+            allCameraMarkers.clear();
+            if (cameras != null) {
+                for (Camera cam : cameras) {
+                    GeoPoint gp = cam.getGeoPoint();
+                    if (gp == null) continue;
+                    // Tamaño 30dp para cámaras (un poco más discreto)
+                    Marker m = createMarker(gp, R.drawable.ic_camera, 30);
+                    m.setRelatedObject(cam);
+                    m.setOnMarkerClickListener((marker, v) -> {
+                        showCameraInfo((Camera) marker.getRelatedObject(), marker.getPosition());
+                        return true;
+                    });
+                    allCameraMarkers.add(m);
+                    map.getOverlays().add(m);
+                }
+            }
+            applyFilters();
+        });
+
+        incidenceRepository.getIncidencesLiveData().observe(this, incidences -> {
+            map.getOverlays().removeAll(allIncidenceMarkers);
+            allIncidenceMarkers.clear();
+            if (incidences != null) {
+                for (Incidence inc : incidences) {
+                    GeoPoint gp = inc.getGeoPoint();
+                    if (gp == null) continue;
+                    // Tamaño 38dp para incidencias (más prioritario visualmente)
+                    Marker m = createMarker(gp, getIconResourceForType(inc.tipo), 38);
+                    m.setRelatedObject(inc);
+                    m.setOnMarkerClickListener((marker, v) -> {
+                        showIncidenceInfo((Incidence) marker.getRelatedObject(), marker.getPosition());
+                        return true;
+                    });
+                    allIncidenceMarkers.add(m);
+                    map.getOverlays().add(m);
+                }
+            }
+            applyFilters();
         });
     }
 
-    private void clearMarkers() {
-        map.getOverlays().removeAll(allCameraMarkers);
-        allCameraMarkers.clear();
-        map.invalidate();
+    /**
+     * Crea un marcador escalado dinámicamente según la densidad de la pantalla (DP a PX).
+     */
+    private Marker createMarker(GeoPoint point, int iconRes, int sizeDp) {
+        Marker m = new Marker(map);
+        m.setPosition(point);
+        // Anchor en el centro inferior para que la punta del icono señale la coordenada
+        m.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+
+        Drawable drawable = ContextCompat.getDrawable(this, iconRes);
+        if (drawable != null) {
+            // Conversión dinámica de DP a Píxeles reales del dispositivo
+            DisplayMetrics metrics = getResources().getDisplayMetrics();
+            int sizePx = (int) (sizeDp * metrics.density);
+
+            // Mantener relación de aspecto original del icono
+            int width = drawable.getIntrinsicWidth();
+            int height = drawable.getIntrinsicHeight();
+            float ratio = (float) width / height;
+
+            int finalWidth, finalHeight;
+            if (width > height) {
+                finalWidth = sizePx;
+                finalHeight = (int) (sizePx / ratio);
+            } else {
+                finalHeight = sizePx;
+                finalWidth = (int) (sizePx * ratio);
+            }
+
+            Bitmap bitmap = Bitmap.createBitmap(finalWidth, finalHeight, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, finalWidth, finalHeight);
+            drawable.draw(canvas);
+
+            m.setIcon(new BitmapDrawable(getResources(), bitmap));
+        }
+        return m;
     }
 
-    private void addCamerasToMap(List<Camera> cameras) {
-        double currentZoom = map.getZoomLevelDouble();
+    private void applyFilters() {
+        double zoom = map.getZoomLevelDouble();
+        boolean zoomOk = zoom >= MIN_ZOOM_FOR_MARKERS;
 
-        for (Camera cam : cameras) {
-            GeoPoint point = cam.getGeoPoint();
-            if (point == null) continue; // Saltar si las coordenadas son inválidas
-
-            Marker m = new Marker(map);
-            m.setPosition(point);
-            m.setIcon(getDrawable(R.drawable.ic_camera));
-            m.setTitle(cam.name);
-            m.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-
-            // Optimización: Solo habilitar si el zoom es suficiente
-            m.setEnabled(currentZoom >= MIN_ZOOM_FOR_MARKERS);
-
-            // Guardar referencia al objeto cámara dentro del marcador si es necesario
-            m.setRelatedObject(cam);
-
-            m.setOnMarkerClickListener((marker, mapView) -> {
-                showCameraInfo((Camera) marker.getRelatedObject(), marker.getPosition());
-                return true;
-            });
-
-            allCameraMarkers.add(m);
-            map.getOverlays().add(m);
+        for (Marker m : allCameraMarkers) {
+            m.setVisible(showCameras);
+            m.setEnabled(showCameras && zoomOk);
+        }
+        for (Marker m : allIncidenceMarkers) {
+            m.setVisible(showIncidences);
+            m.setEnabled(showIncidences && zoomOk);
         }
         map.invalidate();
     }
 
     private void showCameraInfo(Camera cam, GeoPoint position) {
         if (cam == null) return;
-
         selectedCamera = cam;
+        selectedIncidence = null;
 
         txtCameraName.setText(cam.name != null ? cam.name : "-");
         txtCameraRoad.setText(cam.getDisplayRoad());
-        txtCameraKm.setText(cam.kilometer != null ? cam.kilometer : "-");
+        txtCameraKm.setText(cam.kilometer != null ? "KM: " + cam.kilometer : "-");
 
-        String cameraId = cam.id;
-
-        bookmarkRepository
-                .observeIsBookmarked(cameraId)
-                .observe(this, count -> {
-
-                    isBookmarked = count != null && count > 0;
-                    updateBookmarkIcon();
-                });
-
-        btnBookmark.setOnClickListener(v -> {
-            if (isBookmarked) {
-                bookmarkRepository.removeBookmark(cameraId, null);
-            } else {
-                bookmarkRepository.addBookmark(cameraId);
-            }
+        bookmarkRepository.observeIsBookmarked(cam.id).observe(this, count -> {
+            isBookmarked = count != null && count > 0;
+            updateBookmarkIcon();
         });
 
-        scrim.setVisibility(View.VISIBLE);
-        cameraInfo.setVisibility(View.VISIBLE);
+        btnBookmark.setOnClickListener(v -> {
+            if (isBookmarked) bookmarkRepository.removeBookmark(cam.id, null);
+            else bookmarkRepository.addBookmark(cam.id);
+        });
+
+        togglePanels(true);
         map.getController().animateTo(position);
     }
 
+    private void showIncidenceInfo(Incidence inc, GeoPoint position) {
+        if (inc == null) return;
+        selectedIncidence = inc;
+        selectedCamera = null;
+
+        txtIncidenceType.setText(inc.tipo);
+        txtIncidenceRoad.setText(inc.carretera + " (" + inc.provincia + ")");
+        txtIncidenceCause.setText(inc.causa != null ? inc.causa : inc.descripcion);
+
+        togglePanels(false);
+        map.getController().animateTo(position);
+    }
+
+    private void togglePanels(boolean isCamera) {
+        scrim.setVisibility(View.VISIBLE);
+        cameraPanel.setVisibility(isCamera ? View.VISIBLE : View.GONE);
+        incidencePanel.setVisibility(isCamera ? View.GONE : View.VISIBLE);
+    }
+
+    private void closePanels() {
+        scrim.setVisibility(View.GONE);
+        cameraPanel.setVisibility(View.GONE);
+        incidencePanel.setVisibility(View.GONE);
+        selectedCamera = null;
+        selectedIncidence = null;
+    }
+
     private void updateBookmarkIcon() {
-        btnBookmark.setImageResource(
-                isBookmarked
-                        ? R.drawable.ic_bookmark_filled
-                        : R.drawable.ic_bookmark
-        );
+        btnBookmark.setImageResource(isBookmarked ? R.drawable.ic_bookmark_filled : R.drawable.ic_bookmark);
     }
 
     private void openDetails() {
-        if (selectedCamera == null) return;
-
-        Intent intent = new Intent(MapsActivity.this, CameraDetailsActivity.class);
-        // Ahora pasamos datos más limpios
-        intent.putExtra("name", selectedCamera.name);
-        intent.putExtra("road", selectedCamera.getDisplayRoad());
-        intent.putExtra("km", selectedCamera.kilometer);
-        intent.putExtra("lat", selectedCamera.latitude);
-        intent.putExtra("lon", selectedCamera.longitude);
-        intent.putExtra("image", selectedCamera.urlImage);
-        intent.putExtra("id", selectedCamera.id);
-        startActivity(intent);
-    }
-
-    private void closeCameraInfo() {
-        scrim.setVisibility(View.GONE);
-        cameraInfo.setVisibility(View.GONE);
-    }
-
-    private void updateMarkersVisibility(double zoomLevel) {
-        boolean visible = zoomLevel >= MIN_ZOOM_FOR_MARKERS;
-        for (Marker m : allCameraMarkers) {
-            if (m.isEnabled() != visible) {
-                m.setEnabled(visible);
-            }
+        if (selectedCamera != null) {
+            Intent intent = new Intent(this, CameraDetailsActivity.class);
+            intent.putExtra("id", selectedCamera.id);
+            intent.putExtra("name", selectedCamera.name);
+            intent.putExtra("road", selectedCamera.getDisplayRoad());
+            intent.putExtra("km", selectedCamera.kilometer);
+            intent.putExtra("lat", selectedCamera.latitude);
+            intent.putExtra("lon", selectedCamera.longitude);
+            intent.putExtra("image", selectedCamera.urlImage);
+            startActivity(intent);
+        } else if (selectedIncidence != null) {
+            Intent intent = new Intent(this, IncidenceDetailsActivity.class);
+            intent.putExtra("incidence", selectedIncidence);
+            startActivity(intent);
         }
-        map.invalidate();
     }
 
-    @Override
-    protected void onResume() { super.onResume(); map.onResume(); }
-    @Override
-    protected void onPause() { super.onPause(); map.onPause(); }
+    private int getIconResourceForType(String tipo) {
+        if (tipo == null) return R.drawable.ic_otras_incidencias;
+        switch (tipo.trim()) {
+            case "Seguridad vial": return R.drawable.ic_seguridad_vial;
+            case "Obras": return R.drawable.ic_obras;
+            case "Accidente": return R.drawable.ic_accidente;
+            case "Meteorológica": return R.drawable.ic_meteorologica;
+            case "Puertos de montaña": return R.drawable.ic_puertos_de_montania;
+            case "Vialidad invernal tramos": return R.drawable.ic_vialidad_invernal_tramos;
+            default: return R.drawable.ic_otras_incidencias;
+        }
+    }
 
     private void setupBottomMenu(String activeTab) {
-        // 1. Referencias a los contenedores (LinearLayouts)
         View btnExplore = findViewById(R.id.menuExplore);
-        View btnBookmark = findViewById(R.id.menuBookmark);
+        View btnBookmarkMenu = findViewById(R.id.menuBookmark);
         View btnProfile = findViewById(R.id.menuProfile);
-
-        // 2. Referencias a los hijos para cambiar estado (Iconos y Textos)
-        // Esto es necesario para que el color cambie usando el selector
-
-        // ESTADO VISUAL: Marcar el activo
-        if (activeTab.equals("explore")) {
-            setMenuSelected(btnExplore, true);
-        } else if (activeTab.equals("bookmark")) {
-            setMenuSelected(btnBookmark, true);
-        } else if (activeTab.equals("profile")) {
-            setMenuSelected(btnProfile, true);
-        }
-
-        // 3. LISTENERS DE NAVEGACIÓN
-
-        // Botón Explorar
-        btnExplore.setOnClickListener(v -> {
-            if (!activeTab.equals("explore")) {
-                // Como ya estamos en MapsActivity, si vienes de otra, navegas aquí
-                startActivity(new Intent(this, MapsActivity.class));
-                overridePendingTransition(0, 0); // Quitar animación
-                finish(); // Opcional: cierra la anterior para no acumular
-            }
-        });
-
-        // Botón Marcador
-        btnBookmark.setOnClickListener(v -> {
-            if (!activeTab.equals("bookmark")) {
-                // Reemplaza BookmarkActivity.class con tu clase real
-                Intent intent = new Intent(this, BookmarkActivity.class);
-                startActivity(intent);
-                overridePendingTransition(0, 0);
-            }
-        });
-
-        // Botón Perfil
-        btnProfile.setOnClickListener(v -> {
-            if (!activeTab.equals("profile")) {
-                // Reemplaza ProfileActivity.class con tu clase real
-                Intent intent = new Intent(this, ProfileActivity.class);
-                startActivity(intent);
-                overridePendingTransition(0, 0);
-            }
-        });
+        if (activeTab.equals("explore")) setMenuSelected(btnExplore, true);
+        btnBookmarkMenu.setOnClickListener(v -> startActivity(new Intent(this, BookmarkActivity.class)));
+        btnProfile.setOnClickListener(v -> startActivity(new Intent(this, ProfileActivity.class)));
     }
 
-    // Helper para activar el estado "selected" en el padre y sus hijos
     private void setMenuSelected(View container, boolean selected) {
         container.setSelected(selected);
-        // Forzamos el estado seleccionado en los hijos (Imagen y Texto)
-        // para que el selector XML funcione
         if (container instanceof android.view.ViewGroup) {
             android.view.ViewGroup vg = (android.view.ViewGroup) container;
-            for (int i = 0; i < vg.getChildCount(); i++) {
-                vg.getChildAt(i).setSelected(selected);
-            }
+            for (int i = 0; i < vg.getChildCount(); i++) vg.getChildAt(i).setSelected(selected);
         }
     }
+
+    @Override protected void onResume() { super.onResume(); map.onResume(); }
+    @Override protected void onPause() { super.onPause(); map.onPause(); }
 }

@@ -9,19 +9,19 @@ public class Bookmark {
 
     @PrimaryKey
     @NonNull
-    private String cameraId;
+    private int cameraId;
 
     // Constructor requerido por Room
-    public Bookmark(@NonNull String cameraId) {
+    public Bookmark(@NonNull int cameraId) {
         this.cameraId = cameraId;
     }
 
     @NonNull
-    public String getCameraId() {
+    public int getCameraId() {
         return cameraId;
     }
 
-    public void setCameraId(@NonNull String cameraId) {
+    public void setCameraId(@NonNull int cameraId) {
         this.cameraId = cameraId;
     }
 }

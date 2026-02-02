@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.trafficandroidapp.R;
+import com.example.trafficandroidapp.ui.bookmark.BookmarkActivity;
 
 public class ProfileActivity extends AppCompatActivity {
 

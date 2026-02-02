@@ -18,7 +18,7 @@ public interface BookmarkDao {
 
     // 🔥 CLAVE: observar si existe un bookmark concreto
     @Query("SELECT COUNT(*) FROM bookmarks WHERE cameraId = :cameraId")
-    LiveData<Integer> observeIsBookmarked(String cameraId);
+    LiveData<Integer> observeIsBookmarked(int cameraId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Bookmark bookmark);
@@ -27,7 +27,7 @@ public interface BookmarkDao {
     void insertAll(List<Bookmark> bookmarks);
 
     @Query("DELETE FROM bookmarks WHERE cameraId = :cameraId")
-    void deleteByCameraId(String cameraId);
+    void deleteByCameraId(int cameraId);
 
     @Query("DELETE FROM bookmarks")
     void deleteAll();

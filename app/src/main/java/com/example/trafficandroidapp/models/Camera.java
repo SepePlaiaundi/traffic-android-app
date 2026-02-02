@@ -11,13 +11,13 @@ public class Camera {
 
     @PrimaryKey
     @NonNull
-    @SerializedName("id")
-    public String id;
+    @SerializedName("id") // El 'id' de la cámara del JSON
+    public int id;
 
     @SerializedName("nombre")
     public String name;
 
-    @SerializedName("carretera") // A veces viene null, usaremos la lógica en el getter
+    @SerializedName("carretera")
     public String road;
 
     @SerializedName("direccion")
@@ -27,39 +27,31 @@ public class Camera {
     public String kilometer;
 
     @SerializedName("latitud")
-    public String latitude;
+    public double latitude; // Cambiado a double
 
     @SerializedName("longitud")
-    public String longitude;
+    public double longitude; // Cambiado a double
 
     @SerializedName("urlImage")
     public String urlImage;
 
-    // Constructor vacío necesario para Room/Gson
     public Camera() {}
 
-    // Lógica encapsulada: Obtener carretera o dirección
     public String getDisplayRoad() {
         return (road != null && !road.isEmpty()) ? road : address;
     }
 
-    // Lógica encapsulada: Convertir lat/lon seguro a GeoPoint
     public GeoPoint getGeoPoint() {
-        try {
-            double lat = Double.parseDouble(latitude);
-            double lon = Double.parseDouble(longitude);
-            return new GeoPoint(lat, lon);
-        } catch (NumberFormatException | NullPointerException e) {
-            return null;
-        }
+        // Al ser double, ya no necesitas Double.parseDouble()
+        if (latitude == 0 && longitude == 0) return null;
+        return new GeoPoint(latitude, longitude);
     }
 
-    @NonNull
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(@NonNull String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -95,19 +87,19 @@ public class Camera {
         this.kilometer = kilometer;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 

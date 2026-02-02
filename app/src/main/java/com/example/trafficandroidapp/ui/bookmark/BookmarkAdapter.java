@@ -1,4 +1,4 @@
-package com.example.trafficandroidapp.ui;
+package com.example.trafficandroidapp.ui.bookmark;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +13,6 @@ import com.example.trafficandroidapp.repository.BookmarkRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class BookmarkAdapter
         extends RecyclerView.Adapter<BookmarkViewHolder> {

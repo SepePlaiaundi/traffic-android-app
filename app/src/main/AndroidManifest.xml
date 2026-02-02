@@ -19,10 +19,13 @@
         android:theme="@style/Theme.TrafficAndroidApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.IncidenceDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.BookmarkActivity"
+            android:name=".ui.bookmark.BookmarkActivity"
             android:exported="false" />
         <activity
             android:name=".ui.CameraDetailsActivity"

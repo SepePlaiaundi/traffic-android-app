@@ -1,4 +1,4 @@
-package com.example.trafficandroidapp.ui;
+package com.example.trafficandroidapp.ui.bookmark;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import com.example.trafficandroidapp.models.Bookmark;
 import com.example.trafficandroidapp.models.Camera;
 import com.example.trafficandroidapp.repository.BookmarkRepository;
 import com.example.trafficandroidapp.repository.CameraRepository;
+import com.example.trafficandroidapp.ui.MapsActivity;
+import com.example.trafficandroidapp.ui.ProfileActivity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,7 +30,7 @@ public class BookmarkActivity extends AppCompatActivity {
 
 
     // Cache local SOLO para filtrar
-    private final Set<String> bookmarkedCameraIds = new HashSet<>();
+    private final Set<Integer> bookmarkedCameraIds = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

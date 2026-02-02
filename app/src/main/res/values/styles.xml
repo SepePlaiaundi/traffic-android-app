@@ -84,4 +84,17 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">#99FFFFFF</item>
     </style>
+
+    <style name="Seid.Chip" parent="Widget.Material3.Chip.Suggestion">
+        <item name="android:fontFamily">@font/urbanist</item>
+        <item name="android:fontWeight">600</item>
+        <item name="android:textSize">14sp</item>
+        <item name="chipBackgroundColor">@color/selector_chip_background</item>
+        <item name="android:textColor">@color/selector_chip_text</item>
+        <item name="chipStrokeWidth">0dp</item>
+        <item name="chipCornerRadius">12dp</item>
+        <item name="chipIconVisible">false</item>
+        <item name="showMotionSpec">@null</item>
+        <item name="hideMotionSpec">@null</item>
+    </style>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.trafficandroidapp.ui;
+package com.example.trafficandroidapp.ui.bookmark;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +12,7 @@ import com.bumptech.glide.Glide;
 import com.example.trafficandroidapp.R;
 import com.example.trafficandroidapp.models.Camera;
 import com.example.trafficandroidapp.repository.BookmarkRepository;
-
-import java.util.Set;
+import com.example.trafficandroidapp.ui.CameraDetailsActivity;
 
 public class BookmarkViewHolder extends RecyclerView.ViewHolder {
 

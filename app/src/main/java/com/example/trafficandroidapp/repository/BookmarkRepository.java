@@ -53,7 +53,7 @@ public class BookmarkRepository {
         return dao.observeAll();
     }
 
-    public LiveData<Integer> observeIsBookmarked(String cameraId) {
+    public LiveData<Integer> observeIsBookmarked(int cameraId) {
         return dao.observeIsBookmarked(cameraId);
     }
 
@@ -62,7 +62,7 @@ public class BookmarkRepository {
        ESCRITURA (ROOM + API)
        ============================ */
 
-    public void addBookmark(String cameraId) {
+    public void addBookmark(int cameraId) {
 
         executor.execute(() ->
                 dao.insert(new Bookmark(cameraId))
@@ -80,7 +80,7 @@ public class BookmarkRepository {
         });
     }
 
-    public void removeBookmark(String cameraId,
+    public void removeBookmark(int cameraId,
                                Runnable onSuccess) {
 
         executor.execute(() -> {
