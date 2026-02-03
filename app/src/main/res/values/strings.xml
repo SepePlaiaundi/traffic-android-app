@@ -11,4 +11,5 @@
     <string name="login_hint">¿Ya tienes cuenta? Iniciar sesión</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="title_activity_google_maps">GoogleMapsActivity</string>
+    <string name="error_field_required">Requerido</string>
 </resources>
