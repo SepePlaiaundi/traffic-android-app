@@ -3,6 +3,7 @@ package com.example.trafficandroidapp.repository;
 import android.content.Context;
 import com.example.trafficandroidapp.api.AuthApiService;
 import com.example.trafficandroidapp.api.RetrofitClient;
+import com.example.trafficandroidapp.models.UserResponse;
 import com.example.trafficandroidapp.models.auth.LoginRequest;
 import com.example.trafficandroidapp.models.auth.LoginResponse;
 import com.example.trafficandroidapp.models.auth.RegisterRequest; // Importar
@@ -27,14 +28,15 @@ public class AuthRepository {
 
     public void login(String email, String password, AuthCallback callback) {
         String hashedPassword = HashUtils.toSha256(password);
-
         LoginRequest request = new LoginRequest(email, hashedPassword);
+
         api.login(request).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    sessionManager.saveToken(response.body().getToken());
-                    callback.onSuccess();
+                    String token = response.body().getToken();
+                    // Llamada encadenada para obtener el perfil inmediatamente
+                    fetchProfileAndFinish(token, callback);
                 } else {
                     callback.onError("Credenciales incorrectas");
                 }
@@ -42,6 +44,31 @@ public class AuthRepository {
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 callback.onError("Error de conexión");
+            }
+        });
+    }
+
+    private void fetchProfileAndFinish(String token, AuthCallback callback) {
+        api.getProfile("Bearer " + token).enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    // AHORA PASAMOS 4 PARÁMETROS: token, nombre, email y AVATAR
+                    sessionManager.saveSession(
+                            token,
+                            response.body().getNombreCompleto(),
+                            response.body().getEmail(),
+                            response.body().getAvatar() // <-- Añade esto
+                    );
+                    callback.onSuccess();
+                } else {
+                    callback.onError("Error al obtener datos del usuario");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                callback.onError("Error de perfil: " + t.getMessage());
             }
         });
     }

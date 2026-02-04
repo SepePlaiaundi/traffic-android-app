@@ -41,6 +41,8 @@ dependencies {
     implementation("org.osmdroid:osmdroid-android:6.1.18")
     implementation("org.locationtech.proj4j:proj4j:1.1.5")
 
+    implementation("com.cloudinary:cloudinary-android:2.5.0")
+
     // RED
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")

@@ -1,11 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ProfileActivity">
+    android:background="@drawable/bg_1">
+
+    <ScrollView
+        android:id="@+id/profileContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/bottomMenu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingHorizontal="@dimen/spacing_screen">
+
+            <View android:layout_width="match_parent" android:layout_height="40dp" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgAvatar"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:padding="2dp"
+                    android:scaleType="centerCrop"
+                    app:strokeColor="@color/seid_yellow"
+                    app:strokeWidth="3dp"
+                    app:shapeAppearanceOverlay="@style/CircleImage"
+                    android:src="@drawable/icon" />
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="bottom|end"
+                    android:src="@android:drawable/ic_menu_camera"
+                    app:tint="@color/seid_yellow"
+                    android:background="@drawable/bg_camera_info"
+                    android:padding="6dp" />
+            </FrameLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/Seid.Text.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mi Perfil"
+                android:textColor="@android:color/white"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/Seid.Text.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Correo Electrónico"
+                android:textColor="@color/seid_hint"
+                android:layout_marginTop="24dp"
+                android:layout_gravity="start"/>
+
+            <EditText
+                android:id="@+id/etEmail"
+                style="@style/Seid.EditText.Email"
+                android:layout_width="match_parent"
+                android:enabled="false"
+                android:alpha="0.6"
+                android:layout_marginTop="4dp"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/Seid.Text.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre Completo"
+                android:textColor="@color/seid_hint"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="start"/>
+
+            <EditText
+                android:id="@+id/etFullName"
+                style="@style/Seid.EditText.Email"
+                android:layout_width="match_parent"
+                android:hint="Tu nombre"
+                android:inputType="textPersonName"
+                android:layout_marginTop="4dp"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/Seid.Text.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nueva Contraseña"
+                android:textColor="@color/seid_hint"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="start"/>
+
+            <EditText
+                android:id="@+id/etPassword"
+                style="@style/Seid.EditText.Password"
+                android:layout_width="match_parent"
+                android:hint="******"
+                android:layout_marginTop="4dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSaveProfile"
+                style="@style/Seid.Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_marginTop="32dp"
+                android:text="GUARDAR CAMBIOS"
+                app:backgroundTint="@color/seid_yellow"
+                android:textColor="@android:color/black"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Cerrar Sesión"
+                android:textColor="#FF5252" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/loadingOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#B3000000"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            app:indicatorColor="@color/seid_yellow"
+            app:indicatorSize="64dp"
+            app:trackThickness="6dp" />
+    </FrameLayout>
 
     <include
         android:id="@+id/bottomMenu"
