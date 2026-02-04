@@ -9,7 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 
 public interface CameraApiService {
-    @GET("camara")
+    @GET("camara/mobile")
     Call<List<Camera>> getCameras(
             @Header("Authorization") String authHeader
     );
