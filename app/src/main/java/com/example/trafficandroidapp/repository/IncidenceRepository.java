@@ -53,9 +53,15 @@ public class IncidenceRepository {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    // Al tener éxito, forzamos un refresco de la API
-                    // para que Room se actualice y la UI "reaccione" sola
                     fetchFromApi();
+                } else {
+                    // AGREGAR ESTO PARA VER POR QUÉ FALLA
+                    try {
+                        String errorBody = response.errorBody().string();
+                        android.util.Log.e("API_ERROR", "Error: " + response.code() + " " + errorBody);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

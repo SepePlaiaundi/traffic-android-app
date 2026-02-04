@@ -19,7 +19,7 @@ import com.example.trafficandroidapp.models.Incidence; // IMPORTANTE
                 Bookmark.class,
                 Incidence.class // AÑADIDO
         },
-        version = 11,
+        version = 12,
         exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {

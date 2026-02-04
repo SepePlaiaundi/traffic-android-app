@@ -4,9 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="20dp"
-    app:cardElevation="12dp"
-    android:layout_margin="16dp">
+    app:cardCornerRadius="8dp"
+    app:cardElevation="10dp"
+    android:layout_margin="16dp"
+    app:cardBackgroundColor="#1E1E1E">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +21,7 @@
             android:text="Nueva Incidencia"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/white"
+            android:textColor="@android:color/white"
             android:layout_marginBottom="16dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -28,21 +29,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Tipo de incidencia"
-            app:boxStrokeColor="@color/white">
+            android:textColorHint="#AAFFFFFF"
+            app:boxStrokeColor="@android:color/white">
             <AutoCompleteTextView
                 android:id="@+id/comboTipo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"/>
+                android:inputType="none"
+                android:textColor="@android:color/white"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/etDescripcion"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Descripción (ej. Accidente carril derecho)"
             android:layout_marginTop="12dp"
-            android:backgroundTint="@color/white"/>
+            android:hint="Descripción (ej. Accidente carril derecho)"
+            android:textColorHint="#AAFFFFFF"
+            app:boxStrokeColor="@android:color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDescripcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@android:color/transparent"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Cancelar"
+                android:layout_marginEnd="8dp"
                 android:textColor="#FF5555"/>
 
             <Button
@@ -65,7 +78,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Reportar"
-                android:backgroundTint="#4CAF50"/>
+                android:textColor="@android:color/black"
+                android:backgroundTint="@color/seid_yellow"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

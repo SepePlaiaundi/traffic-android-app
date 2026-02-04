@@ -7,6 +7,7 @@ import com.example.trafficandroidapp.models.auth.LoginRequest;
 import com.example.trafficandroidapp.models.auth.LoginResponse;
 import com.example.trafficandroidapp.models.auth.RegisterRequest; // Importar
 import com.example.trafficandroidapp.security.SessionManager;
+import com.example.trafficandroidapp.utils.HashUtils;
 
 import java.io.IOException;
 
@@ -25,7 +26,9 @@ public class AuthRepository {
     }
 
     public void login(String email, String password, AuthCallback callback) {
-        LoginRequest request = new LoginRequest(email, password);
+        String hashedPassword = HashUtils.toSha256(password);
+
+        LoginRequest request = new LoginRequest(email, hashedPassword);
         api.login(request).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
@@ -45,7 +48,9 @@ public class AuthRepository {
 
     // --- MÉTODO NUEVO DE REGISTRO ---
     public void register(String nombre, String email, String password, AuthCallback callback) {
-        RegisterRequest request = new RegisterRequest(nombre, email, password);
+        String hashedPassword = HashUtils.toSha256(password);
+
+        RegisterRequest request = new RegisterRequest(nombre, email, hashedPassword);
 
         api.register(request).enqueue(new Callback<Void>() {
             @Override

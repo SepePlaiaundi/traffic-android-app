@@ -12,9 +12,9 @@ import java.io.Serializable;
 @Entity(tableName = "incidences")
 public class Incidence implements Serializable {
 
-    @PrimaryKey // Ahora 'id' es la clave primaria real
+    @PrimaryKey(autoGenerate = true) // Recomendado añadir autoGenerate para Room local
     @SerializedName("id")
-    public int id;
+    public Integer id;
 
     // Puedes borrar idModel si el backend no lo envía en el JSON
     // @SerializedName("idModel")
@@ -42,11 +42,11 @@ public class Incidence implements Serializable {
         return (tipo != null && !tipo.isEmpty()) ? tipo : "Incidencia";
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
