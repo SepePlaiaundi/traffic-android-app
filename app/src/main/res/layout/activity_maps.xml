@@ -86,6 +86,17 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <include
+        android:id="@+id/addIncidenceInfo"
+        layout="@layout/view_add_incidence"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:elevation="15dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomMenu"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <include
         android:id="@+id/bottomMenu"
         layout="@layout/view_bottom_menu"
         android:layout_width="0dp"
