@@ -8,11 +8,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -62,12 +59,6 @@ public class MapsActivity extends AppCompatActivity {
     private boolean showCameras = true;
     private boolean showIncidences = true;
 
-    private View addIncidencePanel; // El include en el XML
-    private AutoCompleteTextView comboTipo;
-    private EditText etDescripcion;
-    private GeoPoint pendingPoint;
-    private Marker tempMarker;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,35 +103,6 @@ public class MapsActivity extends AppCompatActivity {
             applyFilters();
             closePanels();
         });
-
-        // 1. En setupViews (asegúrate de añadir el include en tu activity_maps.xml)
-        addIncidencePanel = findViewById(R.id.addIncidenceInfo); // ID del include
-        comboTipo = findViewById(R.id.comboTipo);
-        etDescripcion = findViewById(R.id.etDescripcion);
-
-        // Configurar el combo de tipos
-        String[] tipos = {"Accidente", "Obras", "Meteorológica", "Seguridad vial", "Otros"};
-        android.widget.ArrayAdapter<String> adapter = new android.widget.ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tipos);
-        comboTipo.setAdapter(adapter);
-
-        findViewById(R.id.btnCancelAdd).setOnClickListener(v -> cancelAddIncidence());
-        findViewById(R.id.btnConfirmAdd).setOnClickListener(v -> confirmAddIncidence());
-
-        // 2. En initMap añadir el Overlay de eventos
-        org.osmdroid.views.overlay.MapEventsOverlay eventsOverlay = new org.osmdroid.views.overlay.MapEventsOverlay(new org.osmdroid.events.MapEventsReceiver() {
-            @Override
-            public boolean singleTapConfirmedHelper(GeoPoint p) {
-                closePanels(); // Si toca en otro lado, cerramos todo
-                return true;
-            }
-
-            @Override
-            public boolean longPressHelper(GeoPoint p) {
-                showAddIncidenceFlow(p);
-                return true;
-            }
-        });
-        map.getOverlays().add(0, eventsOverlay); // Añadir al fondo
     }
 
     private void initMap() {
@@ -358,57 +320,6 @@ public class MapsActivity extends AppCompatActivity {
             android.view.ViewGroup vg = (android.view.ViewGroup) container;
             for (int i = 0; i < vg.getChildCount(); i++) vg.getChildAt(i).setSelected(selected);
         }
-    }
-
-    private void showAddIncidenceFlow(GeoPoint p) {
-        closePanels(); // Cerramos otros paneles abiertos
-        pendingPoint = p;
-
-        // 1. Poner marcador visual temporal
-        if (tempMarker != null) map.getOverlays().remove(tempMarker);
-        tempMarker = createMarker(p, R.drawable.ic_otras_incidencias, 45);
-        tempMarker.setAlpha(0.7f); // Un poco transparente para indicar "borrador"
-        map.getOverlays().add(tempMarker);
-
-        // 2. Mostrar panel y centrar cámara
-        scrim.setVisibility(View.VISIBLE);
-        addIncidencePanel.setVisibility(View.VISIBLE);
-        map.getController().animateTo(p);
-    }
-
-    private void confirmAddIncidence() {
-        String tipo = comboTipo.getText().toString();
-        String desc = etDescripcion.getText().toString();
-
-        if (tipo.isEmpty()) {
-            Toast.makeText(this, "Selecciona un tipo", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        Incidence inc = new Incidence();
-        inc.setLatitud(pendingPoint.getLatitude());
-        inc.setLongitud(pendingPoint.getLongitude());
-        inc.setTipo(tipo);
-        inc.setDescripcion(desc);
-        inc.setCarretera("Ubicación manual"); // Podrías usar Geocoder aquí para sacar la calle
-        inc.setProvincia("Usuario");
-
-        // Enviar al repositorio (él se encarga del POST y de refrescar Room)
-        incidenceRepository.addIncidence(inc);
-
-        Toast.makeText(this, "Reportando incidencia...", Toast.LENGTH_SHORT).show();
-        cancelAddIncidence(); // Limpiar UI
-    }
-
-    private void cancelAddIncidence() {
-        if (tempMarker != null) map.getOverlays().remove(tempMarker);
-        tempMarker = null;
-        pendingPoint = null;
-        etDescripcion.setText("");
-        comboTipo.setText("");
-        addIncidencePanel.setVisibility(View.GONE);
-        scrim.setVisibility(View.GONE);
-        map.invalidate();
     }
 
     @Override protected void onResume() { super.onResume(); map.onResume(); }

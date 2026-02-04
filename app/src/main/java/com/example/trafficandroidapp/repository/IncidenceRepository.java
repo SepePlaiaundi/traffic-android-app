@@ -45,27 +45,6 @@ public class IncidenceRepository {
         return dao.observeAll();
     }
 
-    public void addIncidence(Incidence incidence) {
-        String token = sessionManager.getToken();
-        if (token == null) token = "";
-
-        api.saveIncidence("Bearer " + token, incidence).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    // Al tener éxito, forzamos un refresco de la API
-                    // para que Room se actualice y la UI "reaccione" sola
-                    fetchFromApi();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                // Log error
-            }
-        });
-    }
-
     private void fetchFromApi() {
         String token = sessionManager.getToken();
         // Si la API es pública (Cross Origin *) quizás no necesites token,
