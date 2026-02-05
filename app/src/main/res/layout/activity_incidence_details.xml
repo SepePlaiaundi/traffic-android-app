@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Detalles de Incidencia"
+            android:text="@string/detalles_de_incidencia"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -93,7 +93,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ubicación y Causa"
+                    android:text="@string/ubicacion_y_causa"
                     android:textColor="@color/seid_yellow"
                     android:textStyle="bold" />
 
@@ -118,22 +118,22 @@
                     android:rowCount="2">
 
                     <LinearLayout android:orientation="vertical" android:layout_columnWeight="1" android:layout_marginBottom="12dp">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Carretera" android:textColor="#AAFFFFFF" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/carretera" android:textColor="#AAFFFFFF" android:textSize="12sp" />
                         <TextView android:id="@+id/txtRoad" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@android:color/white" android:textStyle="bold" tools:text="A-8" />
                     </LinearLayout>
 
                     <LinearLayout android:orientation="vertical" android:layout_columnWeight="1">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Provincia" android:textColor="#AAFFFFFF" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/provincia" android:textColor="#AAFFFFFF" android:textSize="12sp" />
                         <TextView android:id="@+id/txtProvince" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@android:color/white" android:textStyle="bold" tools:text="Bizkaia" />
                     </LinearLayout>
 
                     <LinearLayout android:orientation="vertical" android:layout_columnWeight="1">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Causa" android:textColor="#AAFFFFFF" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/causa" android:textColor="#AAFFFFFF" android:textSize="12sp" />
                         <TextView android:id="@+id/txtCause" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@android:color/white" android:textStyle="bold" tools:text="Obras" />
                     </LinearLayout>
 
                     <LinearLayout android:orientation="vertical" android:layout_columnWeight="1">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Ciudad" android:textColor="#AAFFFFFF" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/ciudad" android:textColor="#AAFFFFFF" android:textSize="12sp" />
                         <TextView android:id="@+id/txtCity" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@android:color/white" android:textStyle="bold" tools:text="Bilbao" />
                     </LinearLayout>
                 </GridLayout>

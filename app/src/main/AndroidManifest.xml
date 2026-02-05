@@ -22,6 +22,9 @@
         android:usesCleartextTraffic="true">
 
         <activity
+            android:name=".ui.BaseBottomMenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.IncidenceDetailsActivity"
             android:exported="false" />
         <activity

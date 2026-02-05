@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Detalles de la cámara"
+            android:text="@string/camera_details_title"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@android:color/white"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:paddingVertical="12dp"
-            android:text="Guardar la cámara"
+            android:text="@string/save_camera"
             android:textAllCaps="false"
             app:backgroundTint="#1E1E1E"
             android:textColor="@android:color/white"
@@ -100,7 +100,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Nombre"
+                            android:text="@string/camera_name_label"
                             android:textSize="12sp"
                             android:textColor="#AAFFFFFF"/>
 
@@ -109,7 +109,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             tools:text="Cámara A-8"
-                            android:text="--"
+                            android:text="@string/placeholder_dash"
                             android:textSize="15sp"
                             android:textStyle="bold"
                             android:textColor="@android:color/white"/>
@@ -126,7 +126,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Carretera"
+                            android:text="@string/camera_road_label"
                             android:textSize="12sp"
                             android:textColor="#AAFFFFFF"/>
 
@@ -135,7 +135,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             tools:text="A-8"
-                            android:text="--"
+                            android:text="@string/placeholder_dash"
                             android:textSize="15sp"
                             android:textStyle="bold"
                             android:textColor="@android:color/white"/>
@@ -152,7 +152,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Km"
+                            android:text="@string/camera_km_label"
                             android:textSize="12sp"
                             android:textColor="#AAFFFFFF"/>
 
@@ -161,7 +161,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             tools:text="123.4"
-                            android:text="--"
+                            android:text="@string/placeholder_dash"
                             android:textSize="15sp"
                             android:textStyle="bold"
                             android:textColor="@android:color/white"/>
@@ -173,7 +173,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    android:text="Coordenadas"
+                    android:text="@string/coordinates_label"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@android:color/white"/>
@@ -196,7 +196,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Latitud"
+                            android:text="@string/latitude_label"
                             android:textSize="12sp"
                             android:textColor="#AAFFFFFF"/>
 
@@ -205,7 +205,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             tools:text="43.3423"
-                            android:text="--"
+                            android:text="@string/placeholder_dash"
                             android:textColor="@android:color/white"/>
                     </LinearLayout>
 
@@ -219,7 +219,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Longitud"
+                            android:text="@string/longitude_label"
                             android:textSize="12sp"
                             android:textColor="#AAFFFFFF"/>
 
@@ -228,7 +228,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             tools:text="-1.9782"
-                            android:text="--"
+                            android:text="@string/placeholder_dash"
                             android:textColor="@android:color/white"/>
                     </LinearLayout>
                 </LinearLayout>

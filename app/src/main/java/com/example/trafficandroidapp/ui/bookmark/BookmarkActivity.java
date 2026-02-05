@@ -13,6 +13,7 @@ import com.example.trafficandroidapp.models.Bookmark;
 import com.example.trafficandroidapp.models.Camera;
 import com.example.trafficandroidapp.repository.BookmarkRepository;
 import com.example.trafficandroidapp.repository.CameraRepository;
+import com.example.trafficandroidapp.ui.BaseBottomMenuActivity;
 import com.example.trafficandroidapp.ui.MapsActivity;
 import com.example.trafficandroidapp.ui.ProfileActivity;
 
@@ -21,13 +22,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class BookmarkActivity extends AppCompatActivity {
+public class BookmarkActivity extends BaseBottomMenuActivity {
 
     private BookmarkRepository bookmarkRepository;
     private CameraRepository cameraRepository;
     private BookmarkAdapter adapter;
     private List<Camera> allCamerasCache = new ArrayList<>();
-
 
     // Cache local SOLO para filtrar
     private final Set<Integer> bookmarkedCameraIds = new HashSet<>();
@@ -45,10 +45,11 @@ public class BookmarkActivity extends AppCompatActivity {
         setupBottomMenu("bookmark");
     }
 
-    /* ============================
-       OBSERVACIÓN REACTIVA
-       ============================ */
-
+    /*
+     * ============================
+     * OBSERVACIÓN REACTIVA
+     * ============================
+     */
 
     private void observeData() {
         cameraRepository.getCamerasLiveData().observe(this, cameras -> {
@@ -79,56 +80,21 @@ public class BookmarkActivity extends AppCompatActivity {
         }
         adapter.setItems(filtered);
     }
-    /* ============================
-       RECYCLER
-       ============================ */
+    /*
+     * ============================
+     * RECYCLER
+     * ============================
+     */
 
     private void setupRecyclerView() {
 
-        RecyclerView recyclerView =
-                findViewById(R.id.recyclerBookmarks);
+        RecyclerView recyclerView = findViewById(R.id.recyclerBookmarks);
 
         adapter = new BookmarkAdapter();
-        adapter.configure(bookmarkRepository, () -> {});
+        adapter.configure(bookmarkRepository, () -> {
+        });
         recyclerView.setLayoutManager(
                 new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-    }
-
-    /* ============================
-       BOTTOM MENU
-       ============================ */
-
-    private void setupBottomMenu(String activeTab) {
-
-        View btnExplore = findViewById(R.id.menuExplore);
-        View btnBookmark = findViewById(R.id.menuBookmark);
-        View btnProfile = findViewById(R.id.menuProfile);
-
-        if ("bookmark".equals(activeTab)) {
-            setMenuSelected(btnBookmark, true);
-        }
-
-        btnExplore.setOnClickListener(v -> {
-            startActivity(new Intent(this, MapsActivity.class));
-            overridePendingTransition(0, 0);
-            finish();
-        });
-
-        btnProfile.setOnClickListener(v -> {
-            startActivity(new Intent(this, ProfileActivity.class));
-            overridePendingTransition(0, 0);
-        });
-    }
-
-    private void setMenuSelected(View container, boolean selected) {
-        container.setSelected(selected);
-        if (container instanceof android.view.ViewGroup) {
-            android.view.ViewGroup vg =
-                    (android.view.ViewGroup) container;
-            for (int i = 0; i < vg.getChildCount(); i++) {
-                vg.getChildAt(i).setSelected(selected);
-            }
-        }
     }
 }

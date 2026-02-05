@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Detalle de Incidencia"
+            android:text="@string/incidence_detail_title"
             android:textColor="@android:color/white"
             android:textStyle="bold"
             android:textSize="18sp" />
@@ -40,17 +40,17 @@
         android:weightSum="3">
 
         <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tipo" android:textSize="12sp" android:textColor="#AAFFFFFF"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/incidence_type_label" android:textSize="12sp" android:textColor="#AAFFFFFF"/>
             <TextView android:id="@+id/txtIncidenceType" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textStyle="bold" android:textColor="@android:color/white" android:gravity="center"/>
         </LinearLayout>
 
         <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Carretera" android:textSize="12sp" android:textColor="#AAFFFFFF"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/incidence_road_label" android:textSize="12sp" android:textColor="#AAFFFFFF"/>
             <TextView android:id="@+id/txtIncidenceRoad" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textStyle="bold" android:textColor="@android:color/white"/>
         </LinearLayout>
 
         <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Causa" android:textSize="12sp" android:textColor="#AAFFFFFF"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/incidence_cause_label" android:textSize="12sp" android:textColor="#AAFFFFFF"/>
             <TextView android:id="@+id/txtIncidenceCause" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textStyle="bold" android:textColor="@android:color/white" android:gravity="center"/>
         </LinearLayout>
     </LinearLayout>
@@ -60,7 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="46dp"
         android:layout_marginTop="20dp"
-        android:text="Más información"
+        android:text="@string/more_info"
         android:textStyle="bold"
         android:backgroundTint="@color/seid_yellow"
         android:textColor="@android:color/black"/>

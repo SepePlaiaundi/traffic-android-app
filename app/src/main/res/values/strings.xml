@@ -1,15 +1,99 @@
 <resources>
+    <!-- App -->
     <string name="app_name">TrafficAndroidApp</string>
+    
+    <!-- Authentication -->
     <string name="login">Iniciar Sesión</string>
     <string name="register">Registrarse</string>
-    <string name="main_logo_description">Logo Principal</string>
     <string name="email">Correo electrónico</string>
     <string name="password">Contraseña</string>
     <string name="name">Nombre</string>
     <string name="confirm_password">Confirmar contraseña</string>
     <string name="register_hint">¿Nuevo usuario? Registrarse</string>
     <string name="login_hint">¿Ya tienes cuenta? Iniciar sesión</string>
+    <string name="registering">Registrando…</string>
+    
+    <!-- Validation Messages -->
+    <string name="error_field_required">Requerido</string>
+    <string name="error_passwords_not_match">Las contraseñas no coinciden</string>
+    <string name="error_password_too_short">La contraseña es muy corta</string>
+    <string name="error_invalid_email">Email no válido</string>
+    <string name="error_name_required">El nombre es obligatorio</string>
+    <string name="error_prefix">Error: %1$s</string>
+    
+    <!-- Success Messages -->
+    <string name="register_success">¡Registro exitoso! Por favor inicia sesión.</string>
+    <string name="profile_updated">¡Perfil actualizado!</string>
+    <string name="session_closed">Sesión cerrada</string>
+    
+    <!-- Profile -->
+    <string name="my_profile">Mi Perfil</string>
+    <string name="email_label">Correo Electrónico</string>
+    <string name="full_name_label">Nombre Completo</string>
+    <string name="new_password_label">Nueva Contraseña</string>
+    <string name="save_changes">GUARDAR CAMBIOS</string>
+    <string name="logout">Cerrar Sesión</string>
+    <string name="hint_your_name">Tu nombre</string>
+    <string name="hint_password_dots">******</string>
+    
+    <!-- Map Filters -->
+    <string name="filter_all">Todo</string>
+    <string name="filter_cameras">Cámaras</string>
+    <string name="filter_incidences">Incidencias</string>
+    
+    <!-- Camera Info -->
+    <string name="camera_info_title">Información de la cámara</string>
+    <string name="camera_name_label">Nombre</string>
+    <string name="camera_road_label">Carretera</string>
+    <string name="camera_km_label">Km</string>
+    <string name="camera_details_title">Detalles de la cámara</string>
+    <string name="save_camera">Guardar la cámara</string>
+    <string name="view_details">Ver detalles</string>
+    <string name="coordinates_label">Coordenadas</string>
+    <string name="latitude_label">Latitud</string>
+    <string name="longitude_label">Longitud</string>
+    <string name="placeholder_dash">--</string>
+    <string name="km_format">KM: %1$s</string>
+    
+    <!-- Incidence Info -->
+    <string name="incidence_detail_title">Detalle de Incidencia</string>
+    <string name="incidence_type_label">Tipo</string>
+    <string name="incidence_road_label">Carretera</string>
+    <string name="incidence_cause_label">Causa</string>
+    <string name="more_info">Más información</string>
+    
+    <!-- Add Incidence -->
+    <string name="new_incidence">Nueva Incidencia</string>
+    <string name="incidence_type_hint">Tipo de incidencia</string>
+    <string name="incidence_description_hint">Descripción (ej. Accidente carril derecho)</string>
+    <string name="cancel">Cancelar</string>
+    <string name="report">Reportar</string>
+    <string name="select_type_error">Selecciona un tipo</string>
+    <string name="reporting_incidence">Reportando incidencia…</string>
+    <string name="manual_location">Ubicación manual</string>
+    <string name="user_province">Usuario</string>
+    
+    <!-- Bottom Menu -->
+    <string name="menu_explore">Explorar</string>
+    <string name="menu_bookmark">Marcador</string>
+    <string name="menu_profile">Perfil</string>
+    
+    <!-- Bookmark -->
+    <string name="bookmark_example_name">CCTV 305</string>
+    <string name="bookmark_example_coordinates">4787154.59, 516071.84</string>
+    
+    <!-- Misc -->
+    <string name="main_logo_description">Logo Principal</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="title_activity_google_maps">GoogleMapsActivity</string>
-    <string name="error_field_required">Requerido</string>
+    <string name="ubicacion_y_causa">Ubicación y Causa</string>
+    <string name="carretera">Carretera</string>
+    <string name="provincia">Provincia</string>
+    <string name="ciudad">Ciudad</string>
+    <string name="causa">Causa</string>
+    <string name="detalles_de_incidencia">Detalles de Incidencia</string>
+    <string name="guardar_camara">Guardar cámara</string>
+    <string name="cerrar">Cerrar</string>
+    <string name="incidence_level_hint">Nivel</string>
+    <string name="incidence_cause_hint">Causa</string>
 </resources>

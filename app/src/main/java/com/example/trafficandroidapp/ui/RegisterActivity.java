@@ -52,7 +52,8 @@ public class RegisterActivity extends AppCompatActivity {
         txtLogin.setOnClickListener(v -> {
             // Volver al login
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-            // Flags para limpiar el stack y que no se pueda volver atrás con el botón 'Back'
+            // Flags para limpiar el stack y que no se pueda volver atrás con el botón
+            // 'Back'
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         });
@@ -78,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Validar Contraseñas coincidentes
         if (!TextUtils.isEmpty(password) && !password.equals(confirmPassword)) {
-            etConfirmPassword.setError("Las contraseñas no coinciden");
+            etConfirmPassword.setError(getString(R.string.error_passwords_not_match));
             focusView = etConfirmPassword;
             cancel = true;
         }
@@ -89,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
             focusView = etPassword;
             cancel = true;
         } else if (password.length() < 4) {
-            etPassword.setError("La contraseña es muy corta");
+            etPassword.setError(getString(R.string.error_password_too_short));
             focusView = etPassword;
             cancel = true;
         }
@@ -100,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
             focusView = etEmail;
             cancel = true;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etEmail.setError("Email no válido");
+            etEmail.setError(getString(R.string.error_invalid_email));
             focusView = etEmail;
             cancel = true;
         }
@@ -124,7 +125,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void performRegister(String nombre, String email, String password) {
         // Deshabilitar botón para evitar doble click
         btnRegister.setEnabled(false);
-        btnRegister.setText("Registrando...");
+        btnRegister.setText(R.string.registering);
 
         authRepository.register(nombre, email, password, new AuthRepository.AuthCallback() {
             @Override
@@ -133,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
                 btnRegister.setEnabled(true);
                 btnRegister.setText(R.string.register);
 
-                Toast.makeText(RegisterActivity.this, "¡Registro exitoso! Por favor inicia sesión.", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this, R.string.register_success, Toast.LENGTH_LONG).show();
 
                 // Navegar al Login
                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -148,7 +149,8 @@ public class RegisterActivity extends AppCompatActivity {
                 btnRegister.setText(R.string.register);
 
                 // Mostrar error
-                Toast.makeText(RegisterActivity.this, "Error: " + message, Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this, getString(R.string.error_prefix, message), Toast.LENGTH_LONG)
+                        .show();
             }
         });
     }

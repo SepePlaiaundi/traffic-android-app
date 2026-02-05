@@ -20,7 +20,7 @@
             android:id="@+id/txtTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Información de la cámara"
+            android:text="@string/camera_info_title"
             android:textColor="@android:color/white"
             android:textStyle="bold"
             android:textSize="18sp" />
@@ -31,7 +31,7 @@
             android:layout_height="28dp"
             android:layout_alignParentEnd="true"
             android:padding="4dp"
-            android:contentDescription="Cerrar"
+            android:contentDescription="@string/cerrar"
             android:src="@drawable/ic_close"
             app:tint="@android:color/white" />
     </RelativeLayout>
@@ -62,7 +62,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nombre"
+                android:text="@string/camera_name_label"
                 android:textSize="12sp"
                 android:textColor="#AAFFFFFF"/>
 
@@ -70,7 +70,7 @@
                 android:id="@+id/txtCameraName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="--"
+                android:text="@string/placeholder_dash"
                 android:textStyle="bold"
                 android:textSize="15sp"
                 android:textColor="@android:color/white"/>
@@ -87,7 +87,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Carretera"
+                android:text="@string/camera_road_label"
                 android:textSize="12sp"
                 android:textColor="#AAFFFFFF"/>
 
@@ -95,7 +95,7 @@
                 android:id="@+id/txtCameraRoad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="--"
+                android:text="@string/placeholder_dash"
                 android:textStyle="bold"
                 android:textSize="15sp"
                 android:textColor="@android:color/white"/>
@@ -112,7 +112,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Km"
+                android:text="@string/camera_km_label"
                 android:textSize="12sp"
                 android:textColor="#AAFFFFFF"/>
 
@@ -120,7 +120,7 @@
                 android:id="@+id/txtCameraKm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="--"
+                android:text="@string/placeholder_dash"
                 android:textStyle="bold"
                 android:textSize="15sp"
                 android:textColor="@android:color/white"/>
@@ -140,7 +140,7 @@
             android:layout_width="0dp"
             android:layout_height="46dp"
             android:layout_weight="1"
-            android:text="Ver detalles"
+            android:text="@string/view_details"
             android:textStyle="bold"
             android:backgroundTint="@color/seid_yellow"
             android:textColor="@android:color/black"/>
@@ -151,7 +151,7 @@
             android:layout_height="46dp"
             android:layout_marginStart="12dp"
             android:background="@drawable/bg_bookmark_button"
-            android:contentDescription="Guardar cámara"
+            android:contentDescription="@string/guardar_camara"
             android:src="@drawable/ic_bookmark"
             app:tint="@color/seid_yellow" />
     </LinearLayout>

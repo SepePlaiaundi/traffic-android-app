@@ -26,7 +26,7 @@
         <TextView
             android:id="@+id/textExplore"
             style="@style/BottomMenuItemText"
-            android:text="Explorar"
+            android:text="@string/menu_explore"
             android:textStyle="bold"
             android:textColor="@color/selector_bottom_menu"/>
     </LinearLayout>
@@ -46,7 +46,7 @@
         <TextView
             android:id="@+id/textBookmark"
             style="@style/BottomMenuItemText"
-            android:text="Marcador"
+            android:text="@string/menu_bookmark"
             android:textColor="@color/selector_bottom_menu"/>
     </LinearLayout>
 
@@ -65,7 +65,7 @@
         <TextView
             android:id="@+id/textProfile"
             style="@style/BottomMenuItemText"
-            android:text="Perfil"
+            android:text="@string/menu_profile"
             android:textColor="@color/selector_bottom_menu"/>
     </LinearLayout>
 

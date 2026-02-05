@@ -20,7 +20,7 @@ import com.example.trafficandroidapp.repository.UserRepository;
 import com.example.trafficandroidapp.security.SessionManager;
 import com.example.trafficandroidapp.ui.bookmark.BookmarkActivity;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends BaseBottomMenuActivity {
 
     private EditText etEmail, etFullName, etPassword;
     private android.widget.ImageView imgAvatar; // Faltaba declarar
@@ -29,8 +29,8 @@ public class ProfileActivity extends AppCompatActivity {
     private SessionManager sessionManager;
     private View loadingOverlay;
     private Uri selectedImageUri;
-    private final ActivityResultLauncher<Intent> imagePickerLauncher =
-            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+    private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     selectedImageUri = result.getData().getData();
                     // Usamos Glide para la previsualización local también
@@ -84,17 +84,18 @@ public class ProfileActivity extends AppCompatActivity {
             Glide.with(this)
                     .load(avatarUrl)
                     .placeholder(R.drawable.icon) // Imagen por defecto mientras carga
-                    .error(R.drawable.icon)       // Imagen si falla
+                    .error(R.drawable.icon) // Imagen si falla
                     .into(imgAvatar);
         }
     }
 
     private void logout() {
         sessionManager.clear();
-        Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
-        // Intent intent = new Intent(this, LoginActivity.class);
-        // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        // startActivity(intent);
+        Toast.makeText(this, R.string.session_closed, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     private void openGallery() {
@@ -107,7 +108,7 @@ public class ProfileActivity extends AppCompatActivity {
         String password = etPassword.getText().toString().trim();
 
         if (nombre.isEmpty()) {
-            etFullName.setError("El nombre es obligatorio");
+            etFullName.setError(getString(R.string.error_name_required));
             return;
         }
 
@@ -119,6 +120,7 @@ public class ProfileActivity extends AppCompatActivity {
                 public void onSuccess(String urlCloudinary) {
                     sendUpdateToServer(nombre, password, urlCloudinary);
                 }
+
                 @Override
                 public void onError(String message) {
                     setLoading(false); // Desbloquear si hay error
@@ -137,7 +139,7 @@ public class ProfileActivity extends AppCompatActivity {
                 sessionManager.updateUserName(nombre);
                 sessionManager.updateAvatar(avatarUrl);
                 setLoading(false); // Desbloquear
-                Toast.makeText(ProfileActivity.this, "¡Perfil actualizado!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, R.string.profile_updated, Toast.LENGTH_SHORT).show();
                 etPassword.setText("");
                 selectedImageUri = null;
             }
@@ -145,38 +147,9 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onError(String message) {
                 setLoading(false); // Desbloquear si hay error
-                Toast.makeText(ProfileActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, getString(R.string.error_prefix, message), Toast.LENGTH_SHORT)
+                        .show();
             }
         });
-    }
-
-    // --- MÉTODOS DE NAVEGACIÓN (Tus existentes) ---
-    private void setupBottomMenu(String activeTab) {
-        View btnExplore = findViewById(R.id.menuExplore);
-        View btnBookmark = findViewById(R.id.menuBookmark);
-        View btnProfile = findViewById(R.id.menuProfile);
-
-        if (activeTab.equals("profile")) setMenuSelected(btnProfile, true);
-
-        btnExplore.setOnClickListener(v -> {
-            startActivity(new Intent(this, MapsActivity.class));
-            overridePendingTransition(0, 0);
-            finish();
-        });
-
-        btnBookmark.setOnClickListener(v -> {
-            startActivity(new Intent(this, BookmarkActivity.class));
-            overridePendingTransition(0, 0);
-        });
-    }
-
-    private void setMenuSelected(View container, boolean selected) {
-        container.setSelected(selected);
-        if (container instanceof android.view.ViewGroup) {
-            android.view.ViewGroup vg = (android.view.ViewGroup) container;
-            for (int i = 0; i < vg.getChildCount(); i++) {
-                vg.getChildAt(i).setSelected(selected);
-            }
-        }
     }
 }
